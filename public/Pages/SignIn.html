@@ -92,7 +92,51 @@
     </div>
   </main>
 
-<script type="module" src="./auth.js"></script>
+<!-- Inline Scripts -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Activate Feather Icons
+    feather.replace();
+
+    // Accordion toggle logic
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const body = this.nextElementSibling;
+        body.style.display = body.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Set current year in footer
+    const yearSpan = document.getElementById("year");
+    if (yearSpan) {
+      yearSpan.textContent = new Date().getFullYear();
+    }
+  });
+
+  // Optional: Manual toggle function (if used elsewhere)
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    item.classList.toggle("open");
+  }
+</script>
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+
+
+<script type="module" src="/scripts/firebase.js"></script>
+
+<script type="module" src="/scripts/app.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>

@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/styles/main.css" />
 
   <script type="module" src="/scripts/app.js"></script>
-  
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -108,6 +108,50 @@
       </div>
     </div>
   </main>
+
+  <!-- Inline Scripts -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Activate Feather Icons
+    feather.replace();
+
+    // Accordion toggle logic
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const body = this.nextElementSibling;
+        body.style.display = body.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Set current year in footer
+    const yearSpan = document.getElementById("year");
+    if (yearSpan) {
+      yearSpan.textContent = new Date().getFullYear();
+    }
+  });
+
+  // Optional: Manual toggle function (if used elsewhere)
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    item.classList.toggle("open");
+  }
+</script>
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+
+
+<script type="module" src="/scripts/firebase.js"></script>
 
   
 <script type="module">
