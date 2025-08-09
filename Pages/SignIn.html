@@ -8,23 +8,20 @@
   <meta name="author" content="Richard Boakye Yiadom" />
 
   <!-- Bootstrap 5 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-..." crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous" />
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />
 
-<!-- Feather Icons -->
-<link rel="icon" type="image/x-icon" href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha384-..." crossorigin="anonymous" />
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/site.css" />
 
-<!-- Custom Styles -->
-<link rel="stylesheet" href="css/site.css" />
-
-<style>
+  <style>
     body {
-      margin-top: 70px;
-      padding-bottom: 80px;
       font-family: 'Poppins', sans-serif;
-      background-color: var(--background-light, #f8f9fa);
+      background-color: #f8f9fa;
+      padding-top: 70px;
+      padding-bottom: 80px;
     }
     .form-container {
       max-width: 500px;
@@ -36,13 +33,13 @@
   </style>
 </head>
 <body>
-   
-  
+
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="../index.html">
         <img src="../assets/logo.jpg" alt="BloodBridge Logo" width="40" class="me-2" />
+        BloodBridge
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,10 +48,10 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto">
-        <li class="nav-item"><a class="nav-link text-white" href="../index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="../Pages/Support.html">Support</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="../Pages/AboutUs.html">About</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="../Pages/Privacy.html">Privacy</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="../Pages/Support.html">Support</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="../Pages/AboutUs.html">About</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="../Pages/Privacy.html">Privacy</a></li>
         </ul>
         <div class="d-flex">
           <a href="../Pages/SignUp.html" class="btn btn-outline-light me-2">Sign Up</a>
@@ -64,6 +61,7 @@
     </div>
   </nav>
 
+  <!-- Sign-In Form -->
   <main class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
     <div class="form-container">
       <h2 class="mb-4 text-center">Sign In</h2>
@@ -92,54 +90,55 @@
     </div>
   </main>
 
+  <!-- Firebase Auth Script -->
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCkxDJflIGlrABXe65TUA9Mr2tIClDMxH0",
-    authDomain: "bloodbridge-3f25e.firebaseapp.com",
-    projectId: "bloodbridge-3f25e",
-    storageBucket: "bloodbridge-3f25e.appspot.com",
-    messagingSenderId: "192881021185",
-    appId: "1:192881021185:web:6588421760928bdb2b0b00",
-    measurementId: "G-W75RZG1BYV"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkxDJflIGlrABXe65TUA9Mr2tIClDMxH0",
+      authDomain: "bloodbridge-3f25e.firebaseapp.com",
+      projectId: "bloodbridge-3f25e",
+      storageBucket: "bloodbridge-3f25e.appspot.com",
+      messagingSenderId: "192881021185",
+      appId: "1:192881021185:web:6588421760928bdb2b0b00",
+      measurementId: "G-W75RZG1BYV"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  const form = document.getElementById("loginForm");
-  const successPopup = document.getElementById("successPopup");
+    const form = document.getElementById("loginForm");
+    const successPopup = document.getElementById("successPopup");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-    if (!email || !password) {
-      alert("Please enter both email and password.");
-      return;
-    }
+      if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+      }
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        successPopup.classList.remove("d-none");
-        console.log("✅ Signed in:", userCredential.user);
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          successPopup.classList.remove("d-none");
+          console.log("✅ Signed in:", userCredential.user);
 
-        // Redirect to dashboard after short delay
-        setTimeout(() => {
-          window.location.href = "../Pages/Dashboard.html"; // Adjust path if needed
-        }, 1500);
-      })
-      .catch((error) => {
-        alert(`❌ Sign-in failed: ${error.message}`);
-        console.error("Sign-in error:", error);
-      });
-  });
-</script>
+          setTimeout(() => {
+            window.location.href = "../Pages/Dashboard.html";
+          }, 1500);
+        })
+        .catch((error) => {
+          alert(`❌ Sign-in failed: ${error.message}`);
+          console.error("Sign-in error:", error);
+        });
+    });
+  </script>
 
-
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
