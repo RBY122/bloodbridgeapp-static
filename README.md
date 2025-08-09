@@ -1,0 +1,2 @@
+# bloodbridgeapp-static
+BloodBridge
