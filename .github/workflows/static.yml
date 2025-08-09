@@ -1,0 +1,40 @@
+# .github/workflows/deploy.yml
+name: 🚀 Deploy static content to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]  # Trigger on push to default branch
+  workflow_dispatch:     # Allow manual trigger from Actions tab
+
+permissions:
+  contents: read         # Read repo contents
+  pages: write           # Write access to GitHub Pages
+  id-token: write        # Required for OIDC authentication
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false  # Let current deployments finish
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 📦 Upload Static Files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'  # Upload everything in the repo root
+
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
