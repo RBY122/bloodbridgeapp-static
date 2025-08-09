@@ -19,6 +19,11 @@
 <!-- Custom Styles -->
 <link rel="stylesheet" href="../styles/main.css" />
 
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
 </head>
 
 
@@ -38,13 +43,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto">
         <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="Pages/Support.html">Support</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="Pages/AboutUs.html">About</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="Pages/Privacy.html">Privacy</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="public/Pages/Support.html">Support</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="public/Pages/AboutUs.html">About</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="public/Pages/Privacy.html">Privacy</a></li>
         </ul>
         <div class="d-flex">
-          <a href="Pages/SignUp.html" class="btn btn-outline-light me-2">Sign Up</a>
-          <a href="Pages/SignIn.html" class="btn btn-light">Sign In</a>
+          <a href="public/Pages/SignUp.html" class="btn btn-outline-light me-2">Sign Up</a>
+          <a href="public/Pages/SignIn.html" class="btn btn-light">Sign In</a>
         </div>
       </div>
     </div>
@@ -55,7 +60,7 @@
   <header class="text-center py-5 bg-danger text-white">
     <h1 class="display-4 fw-bold">Your Blood, Their Lifeline</h1>
     <p class="lead mb-4">Donate hope. Bridge lives.</p>
-    <a href="Pages/SignUp.html" class="btn btn-outline-light me-2">
+    <a href="public/Pages/SignUp.html" class="btn btn-outline-light me-2">
       <i data-feather="heart" class="me-2"></i> Donate Now
     </a>
   </header>
@@ -70,7 +75,7 @@
 
           <!-- Find Drive -->
           <div class="col-6 col-md-3">
-            <a href="Pages/UrgentCases.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
+            <a href="public/Pages/UrgentCases.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
               <i data-feather="map-pin" width="32" height="32" class="text-danger mb-2"></i>
               <div class="fw-semibold">Find Drive</div>
             </a>
@@ -78,7 +83,7 @@
 
           <!-- Alerts -->
           <div class="col-6 col-md-3">
-            <a href="Pages/Notification.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
+            <a href="public/Pages/Notification.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
               <i data-feather="bell" width="32" height="32" class="text-warning mb-2"></i>
               <div class="fw-semibold">Alerts</div>
             </a>
@@ -86,7 +91,7 @@
 
           <!-- Health Tips -->
           <div class="col-6 col-md-3">
-            <a href="Pages/Tips.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
+            <a href="public/Pages/Tips.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
               <i data-feather="book-open" width="32" height="32" class="text-success mb-2"></i>
               <div class="fw-semibold">Health Tips</div>
             </a>
@@ -94,7 +99,7 @@
 
           <!-- Language -->
           <div class="col-6 col-md-3">
-            <a href="Pages/Privacy.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
+            <a href="public/Pages/Privacy.html" class="text-decoration-none text-dark d-block p-3 bg-white shadow-sm rounded hover-scale">
               <i data-feather="globe" width="32" height="32" class="text-primary mb-2"></i>
               <div class="fw-semibold">Privacy Policy</div>
             </a>
@@ -162,7 +167,7 @@
         <section class="text-center my-5 p-4 bg-light rounded">
             <h2 class="text-danger fw-bold">Your Donation Saves Lives</h2>
             <p class="lead mb-5">Every two seconds, someone needs blood. Your donation could be the difference between life and death.</p>
-            <a href="Pages/SignUp.html" class="btn btn-outline-danger btn-lg">
+            <a href="public/Pages/SignUp.html" class="btn btn-outline-danger btn-lg">
                 Become a Blood Donor Today
             </a>
         </section>
@@ -339,7 +344,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
 <!-- Custom JS -->
-<script src="scripts/app.js"></script>
+<script src="/scripts/app.js"></script>
 
 <!-- Inline Scripts -->
 <script>
@@ -383,7 +388,7 @@
   </script>
 
 
-<script type="module" src="./auth.js"></script>
+<script type="module" src="/scripts/firebase.js"></script>
 
 
 
