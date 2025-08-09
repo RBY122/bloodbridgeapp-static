@@ -253,6 +253,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+
+
+
   // ----------------------------
   // 12. Ensure Dropdown Closes Correctly After Selection on Mobile
   // ----------------------------
