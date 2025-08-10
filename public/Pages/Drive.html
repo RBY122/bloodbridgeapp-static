@@ -529,6 +529,45 @@
       });
     });
   });
+
+ 
+  document.addEventListener("DOMContentLoaded", function () {
+    const locationFilter = document.getElementById("locationFilter");
+    const searchInput = document.getElementById("searchInput");
+    const centerCards = document.querySelectorAll(".center-card");
+
+    // 🔍 Filter by dropdown
+    locationFilter.addEventListener("change", function () {
+      const selectedLocation = this.value.toLowerCase();
+      const searchTerm = searchInput.value.toLowerCase();
+
+      centerCards.forEach(card => {
+        const cardLocation = card.getAttribute("data-location").toLowerCase();
+        const cardText = card.innerText.toLowerCase();
+
+        const matchesLocation = selectedLocation === "all" || cardLocation === selectedLocation;
+        const matchesSearch = cardText.includes(searchTerm);
+
+        card.style.display = matchesLocation && matchesSearch ? "block" : "none";
+      });
+    });
+
+    // 🔎 Filter by search input
+    searchInput.addEventListener("input", function () {
+      const searchTerm = this.value.toLowerCase();
+      const selectedLocation = locationFilter.value.toLowerCase();
+
+      centerCards.forEach(card => {
+        const cardLocation = card.getAttribute("data-location").toLowerCase();
+        const cardText = card.innerText.toLowerCase();
+
+        const matchesLocation = selectedLocation === "all" || cardLocation === selectedLocation;
+        const matchesSearch = cardText.includes(searchTerm);
+
+        card.style.display = matchesLocation && matchesSearch ? "block" : "none";
+      });
+    });
+  });
 </script>
 
 
