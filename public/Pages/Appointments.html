@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schedule Appointment - BloodBridge</title>
+    <meta name="description" content="BloodBridge connects blood donors and recipients efficiently across Ghana." />
+    <meta name="author" content="Richard Boakye Yiadom" />
+    
+
+    <!-- Bootstrap 5 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-..." crossorigin="anonymous" />
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous" />
+
+<!-- Feather Icons -->
+<link rel="icon" type="image/x-icon" href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha384-..." crossorigin="anonymous" />
+
+<!-- Custom Styles -->
+<link rel="stylesheet" href="../styles/main.css" />
+
+</head>
+<body class="bg-light">
+    
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+        <img src="../assets/logo.jpg" alt="BloodBridge Logo" width="40" class="me-2" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link text-white" href="../index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="../Pages/Support.html">Support</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="../Pages/AboutUs.html">About</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="../Pages/Privacy.html">Privacy</a></li>
+        </ul>
+        <div class="d-flex">
+          <a href="../Pages/SignUp.html" class="btn btn-outline-light me-2">Sign Up</a>
+          <a href="../Pages/SignIn.html" class="btn btn-light">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="text-center py-5 bg-danger text-white">
+    <h1 class="display-4 fw-bold">Schedule an Appointment to Donate Blood</h1>
+    <p class="lead mb-4">Your Donation Saves Lives. Book your appointment today at your nearest Hospital!</p>
+  </header>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-center text-danger">Schedule an Appointment</h2>
+
+                <!-- ✅ Success & Error Messages -->
+                <div id="successMessage" class="alert alert-success fade show text-center d-none" role="alert">
+                    Appointment scheduled successfully!
+                </div>
+                <div id="errorMessage" class="alert alert-danger fade show text-center d-none" role="alert">
+                    Please fill all required fields.
+                </div>
+
+                <!-- ✅ Appointment Form -->
+                <form id="appointmentForm" autocomplete="off">
+                    <!-- ✅ Select Date & Time -->
+                    <div class="mb-3">
+                        <label for="appointmentDate" class="form-label">Select Date & Time</label>
+                        <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" required />
+                        <span id="dateError" class="text-danger d-none">⚠️ Please select a valid date and time.</span>
+                    </div>
+
+                    <!-- ✅ Select Blood Type -->
+                    <div class="mb-3">
+                        <label for="bloodType" class="form-label">Select Blood Type</label>
+                        <select class="form-select" id="bloodType" name="BloodType" required>
+                            <option value="">-- Choose Blood Type --</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+
+                    <!-- ✅ Select Hospital -->
+                    <div class="mb-3">
+                        <label for="hospitalId" class="form-label fw-bold">Select Hospital</label>
+                        <select class="form-select" id="hospitalId" name="HospitalId" required>
+                            <option value="" selected disabled>-- Choose Hospital --</option>
+                            <option value="1">Korle Bu Teaching Hospital - Accra</option>
+                            <option value="2">Komfo Anokye Teaching Hospital - Kumasi</option>
+                            <option value="3">37 Military Hospital - Accra</option>
+                            <option value="4">Tamale Teaching Hospital - Tamale</option>
+                            <option value="5">Afari Community Hospital - Kumasi</option>
+                            <option value="6">Bomso Clinic - Kumasi</option>
+                            <option value="7">City Hospital Limited - Kumasi</option>
+                            <option value="8">Tafo Government Hospital - Kumasi</option>
+                            <option value="9">Living Waters Specialist Hospital - Ejisu (Kumasi area)</option>
+                            <option value="10">Peace & Love Hospital - Oduom, Kumasi</option>
+                            <option value="11">Adiebeba Hospital - Ahodwo, Kumasi</option>
+                            <option value="12">Asafo-Agyei Hospital - Kumasi</option>
+                            <option value="13">Frimpong-Boateng Medical Center - Toase, Kumasi</option>
+                            <option value="14">Kumasi South Hospital - Kumasi</option>
+                            <option value="15">Kwame Nkrumah University Hospital - KNUST, Kumasi</option>
+                            <option value="16">Manhyia Government Hospital - Kumasi</option>
+                            <option value="17">County Hospital - Abrepo, Kumasi</option>
+                            <option value="18">Atasemanso Hospital - Adiebeba, Kumasi</option>
+                            <option value="1">Komfo Anokye Teaching Hospital - Bantama, Kumasi</option>
+                            <option value="2">Afari Community Hospital - Nkawie Road, Kumasi</option>
+                            <option value="3">Bomso Clinic - Bomso Village, Kumasi</option>
+                            <option value="4">City Hospital Limited - Old Amakom, Kumasi</option>
+                            <option value="5">Tafo Government Hospital - Old Tafo, Kumasi</option>
+                            <option value="6">Peace & Love Hospital - Oduom, Kumasi</option>
+                            <option value="7">Adiebeba Hospital - Ahodwo, Kumasi</option>
+                            <option value="8">Asafo-Agyei Hospital - Kumasi</option>
+                            <option value="9">Frimpong-Boateng Medical Center - Toase, Kumasi</option>
+                            <option value="10">Kumasi South Hospital - Sokoban-Ampayoo, Kumasi</option>
+                            <option value="11">Kwame Nkrumah University Hospital - KNUST Campus, Kumasi</option>
+                            <option value="12">Manhyia Government Hospital - Manhyia, Kumasi</option>
+                            <option value="13">County Hospital - Abrepo, Kumasi</option>
+                            <option value="14">Atasemanso Hospital - Adiebeba, Kumasi</option>
+                            <option value="15">Living Waters Specialist Hospital - Ejisu, Kumasi</option>
+                            <option value="16">McKenzie Health Services - Ahinsan Estate, Kumasi</option>
+                            <option value="17">Kokofu Hospital - Kumasi</option>
+                            <option value="18">Nkenkensu Hospital - Kumasi</option>
+                            <option value="19">Pima Hospital - Buokrom Estate, Kumasi</option>
+                            <option value="20">Twumasi Medical Hospital - Kumasi</option>
+
+                        </select>
+                        <span id="hospitalError" class="text-danger d-none">⚠️ Hospital selection is required.</span>
+                    </div>
+
+                    <!-- ✅ Preview Appointment -->
+                    <button type="button" class="btn btn-danger w-100 py-2" data-bs-toggle="modal" data-bs-target="#appointmentSummary">
+                        Preview Appointment
+                    </button>
+
+                    <!-- ✅ Confirmation Modal -->
+                    <div class="modal fade" id="appointmentSummary" tabindex="-1" aria-labelledby="appointmentSummaryLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="appointmentSummaryLabel">Confirm Appointment</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Date & Time:</strong> <span id="summaryDate"></span></p>
+                                    <p><strong>Blood Type:</strong> <span id="summaryBloodType"></span></p>
+                                    <p><strong>Hospital:</strong> <span id="summaryHospital"></span></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary w-100" id="confirmAppointmentBtn">Confirm Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- ✅ Reschedule & Cancel Options -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-danger" id="rescheduleBtn" type="button">Reschedule</button>
+                    <button class="btn btn-outline-secondary" id="cancelBtn" type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- ✅ Footer placed outside container-fluid to prevent overlap -->
+<footer class="footer bg-dark text-white text-center py-3">
+    <div class="container">
+        <div class="row d-flex flex-wrap justify-content-center text-md-start">
+            <div class="col-md-4 mb-3">
+                <h5>About Us</h5>
+                <p>BloodBridge connects blood donors with recipients efficiently.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Useful Links</h5>
+                <nav>
+                    <ul class="list-unstyled">
+                        <li><a class="text-white opacity-75" href="../Pages/AboutUs.html">About Us</a></li>
+                        <li><a class="text-white opacity-75" href="../Pages/Privacy.html">Privacy Policy</a></li>
+                        <li><a class="text-white opacity-75" href="../Pages/Support.html">Support Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="col-md-4 mb-3">
+                <h5>Get in Touch</h5>
+                <p><i data-feather="map-pin"></i> Kumasi, Ghana</p>
+                <p><i data-feather="phone"></i> <a class="text-white opacity-75" href="tel:+2330596833199">+233 059 683 3199</a></p>
+                <p><i data-feather="mail"></i> <a class="text-white opacity-75" href="mailto:richardboakye1710@gmail.com">richardboakye1710@gmail.com</a></p>
+                <!-- Optional Socials -->
+                <div class="mt-2">
+
+                   <!-- 🌐 Social Media Links -->
+<a href="https://facebook.com/YourProfile" target="_blank" rel="noopener" class="text-white" aria-label="Facebook">
+  <i data-feather="facebook"></i>
+</a>
+
+<a href="https://wa.me/233596833199" target="_blank" rel="noopener" class="text-white" aria-label="WhatsApp">
+  <i data-feather="message-circle"></i>
+</a>
+
+<a href="https://x.com/YourProfile" target="_blank" rel="noopener" class="text-white" aria-label="X (formerly Twitter)">
+  <i data-feather="twitter"></i>
+</a>
+
+<a href="https://instagram.com/YourProfile" target="_blank" rel="noopener" class="text-white" aria-label="Instagram">
+  <i data-feather="instagram"></i>
+</a>
+
+                </div>
+            </div>
+        </div>
+        <p class="mb-1">&copy; <span id="year"></span> BloodBridge. All Rights Reserved.</p>
+    
+    <p class="small mb-0">Built by <a href="https://rby122.github.io/Richard-Porfolio-Website/About.html" class="text-white fw-bold">Richard Boakye Yiadom</a></p>
+    </div>
+</footer>
+
+
+<!-- Bootstrap Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+<!-- jQuery (optional, only if needed) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+<!-- Feather Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+<!-- Custom JS -->
+<script src="/BloodBridgeApp/assets/js/site.js"></script>
+
+<!-- Inline Scripts -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Activate Feather Icons
+    feather.replace();
+
+    // Accordion toggle logic
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const body = this.nextElementSibling;
+        body.style.display = body.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Set current year in footer
+    const yearSpan = document.getElementById("year");
+    if (yearSpan) {
+      yearSpan.textContent = new Date().getFullYear();
+    }
+  });
+
+  // Optional: Manual toggle function (if used elsewhere)
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    item.classList.toggle("open");
+  }
+</script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("appointmentForm");
+            const appointmentDate = document.getElementById("appointmentDate");
+            const hospitalId = document.getElementById("hospitalId");
+            const bloodType = document.getElementById("bloodType");
+
+            const dateError = document.getElementById("dateError");
+            const hospitalError = document.getElementById("hospitalError");
+            const successMessage = document.getElementById("successMessage");
+            const errorMessage = document.getElementById("errorMessage");
+
+            // Update summary when user fills inputs
+            function updateSummary() {
+                document.getElementById("summaryDate").textContent = appointmentDate.value;
+                document.getElementById("summaryBloodType").textContent = bloodType.value;
+                document.getElementById("summaryHospital").textContent = hospitalId.options[hospitalId.selectedIndex]?.text || "";
+            }
+            appointmentDate.addEventListener("change", updateSummary);
+            bloodType.addEventListener("change", updateSummary);
+            hospitalId.addEventListener("change", updateSummary);
+
+            // Preview button opens modal and updates summary
+            document.querySelector('[data-bs-target="#appointmentSummary"]').addEventListener("click", function () {
+                updateSummary();
+            });
+
+            // Confirm Appointment button in modal
+            document.getElementById("confirmAppointmentBtn").addEventListener("click", function (event) {
+                event.preventDefault();
+                let hasErrors = false;
+
+                if (!appointmentDate.value) {
+                    dateError.classList.remove("d-none");
+                    hasErrors = true;
+                } else {
+                    dateError.classList.add("d-none");
+                }
+
+                if (!hospitalId.value) {
+                    hospitalError.classList.remove("d-none");
+                    hasErrors = true;
+                } else {
+                    hospitalError.classList.add("d-none");
+                }
+
+                if (hasErrors) {
+                    errorMessage.classList.remove("d-none");
+                    successMessage.classList.add("d-none");
+                } else {
+                    errorMessage.classList.add("d-none");
+                    successMessage.classList.remove("d-none");
+                    // Hide modal after success
+                    setTimeout(() => {
+                        var modal = bootstrap.Modal.getInstance(document.getElementById('appointmentSummary'));
+                        modal.hide();
+                        form.reset();
+                    }, 1500);
+                }
+            });
+
+            // Reschedule and Cancel buttons
+            document.getElementById("rescheduleBtn").addEventListener("click", function () {
+                form.reset();
+                successMessage.classList.add("d-none");
+                errorMessage.classList.add("d-none");
+            });
+            document.getElementById("cancelBtn").addEventListener("click", function () {
+                form.reset();
+                successMessage.classList.add("d-none");
+                errorMessage.classList.add("d-none");
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>
+
