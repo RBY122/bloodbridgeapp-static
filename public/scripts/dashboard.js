@@ -1,4 +1,4 @@
-
+/*
   // 🔗 Firebase Imports
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
   import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
@@ -166,3 +166,4 @@ function showAlert(message, type = "success") {
       }
     });
   }
+*/
