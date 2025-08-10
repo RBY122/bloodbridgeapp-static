@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donate & Save Lives - BloodBridge</title>
+    <meta name="description" content="BloodBridge connects blood donors and recipients efficiently across Ghana." />
+    <meta name="author" content="Richard Boakye Yiadom" />
+
+     <!-- Bootstrap 5 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-..." crossorigin="anonymous" />
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-..." crossorigin="anonymous" />
+
+<!-- Feather Icons -->
+<link rel="icon" type="image/x-icon" href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha384-..." crossorigin="anonymous" />
+
+<!-- Custom Styles -->
+<link rel="stylesheet" href="../styles/main.css" />
+
+</head>
+
+ 
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+        <img src="assets/logo.jpg" alt="BloodBridge Logo" width="40" class="me-2" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="Pages/Support.html">Support</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="Pages/AboutUs.html">About</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="Pages/Privacy.html">Privacy</a></li>
+        </ul>
+        <div class="d-flex">
+          <a href="Pages/SignUp.html" class="btn btn-outline-light me-2">Sign Up</a>
+          <a href="Pages/SignIn.html" class="btn btn-light">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+<body class="bg-light">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- 🚀 Main Donation Content -->
+      <main class="col-md-9 col-lg-10 px-md-4">
+        <!-- 🔴 Header -->
+        <header class="pt-3 pb-2 mb-3 border-bottom d-flex justify-content-between align-items-center">
+          <h1 class="h2 text-danger">Donate & Save Lives</h1>
+        </header>
+
+        <!-- ✅ Feedback Messages -->
+        <div id="errorMessage" class="alert alert-danger text-center d-none" role="alert"></div>
+        <div id="successMessage" class="alert alert-success text-center d-none" role="alert"></div>
+
+        <!-- 🌍 Impact Section -->
+        <section class="card mt-4 border-danger shadow">
+          <div class="card-header bg-danger text-white text-center">
+            <h4>How Your Donation Helps</h4>
+          </div>
+          <div class="card-body text-center">
+            <p class="fs-5 text-danger">💖 <strong>Every donation can save up to 3 lives!</strong></p>
+            <p class="text-muted">🏥 Your contributions support hospitals and urgent cases.</p>
+            <a href="UrgentCases.html" class="btn btn-outline-danger mt-3">
+              <i class="fas fa-exclamation-triangle"></i> See Urgent Cases
+            </a>
+          </div>
+        </section>
+
+        <!-- 🌟 Transparency Section -->
+        <section class="my-5 bg-light p-4 rounded shadow-sm text-center">
+          <h2 class="text-danger fw-bold">Your Impact, Our Promise</h2>
+          <p class="lead text-muted">
+            Every contribution supports BloodBridge’s mission—enhancing donor outreach, platform development,  
+            and ensuring recipients receive life-saving donations.
+          </p>
+        </section>
+
+        <!-- 🩸 Donation Form -->
+        <section class="container mt-4" id="step1">
+          <h2>Make a Difference Today</h2>
+          <form id="donationForm" autocomplete="off">
+            <div class="mb-3">
+              <label for="amount" class="form-label">Donation Amount (GHS)</label>
+              <input type="number" class="form-control" id="amount" name="Amount" step="0.01" required>
+            </div>
+
+            <h4 class="mt-4">Choose Payment Method</h4>
+            <div class="list-group">
+              <button type="button" class="list-group-item list-group-item-action payment-option">💳 Card Payment</button>
+              <button type="button" class="list-group-item list-group-item-action payment-option">📱 MTN MoMo</button>
+              <button type="button" class="list-group-item list-group-item-action payment-option">📞 Vodafone Cash</button>
+              <button type="button" class="list-group-item list-group-item-action payment-option">🛜 Airtel Tigo Money</button>
+            </div>
+
+            <div class="form-check mt-3">
+              <input type="checkbox" class="form-check-input" id="recurring" name="RecurringDonation">
+              <label class="form-check-label" for="recurring">Make this a recurring monthly donation</label>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="button" id="continueBtn" class="btn btn-danger btn-lg">Proceed to Payment</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- 🔄 Payment Processing -->
+        <section class="container mt-4 text-center d-none" id="step2">
+          <h2 class="text-warning">Processing Payment...</h2>
+          <p>Please complete your payment using the selected method.</p>
+          <div class="spinner-border text-warning mt-3" role="status" aria-label="Loading"></div>
+          <div class="text-center mt-4">
+            <button type="button" id="paymentSuccessBtn" class="btn btn-success btn-lg">Confirm Payment</button>
+          </div>
+        </section>
+
+        <!-- 🎉 Success Confirmation -->
+        <section class="container mt-5 text-center fade-in d-none" id="step3">
+          <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white">
+              <h2>✅ Donation Successful!</h2>
+            </div>
+            <div class="card-body">
+              <p>Thank you for your generosity. Your donation helps save lives!</p>
+              <hr>
+              <h4>Transaction Details</h4>
+              <p><strong>Transaction ID:</strong> 1234567890</p>
+              <p><strong>Amount:</strong> GHS <span id="donationAmount">0.00</span></p>
+              <hr>
+              <button class="btn btn-primary">Download Receipt</button>
+              <p class="mt-3"><a href="Dashboard.html" class="text-muted">Return to Dashboard</a></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 📜 Donation History -->
+        <section class="card mt-4 border-primary shadow">
+          <div class="card-header bg-primary text-white">
+            Your Past Donations
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>GHS 100.00 donated on <strong>Jul 01, 2025</strong></li>
+              <li><strong>Transaction ID:</strong> 1234567890</li>
+              <li>🏥 <a href="DonationHistory.html">View full donation history</a></li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+
+
+
+
+<script>
+  $(document).ready(function () {
+    // 🔘 Highlight selected payment method
+    $(".payment-option").click(function () {
+      $(".payment-option").removeClass("active");
+      $(this).addClass("active");
+    });
+
+    // 🚀 Proceed to payment step
+    $("#continueBtn").click(function () {
+      const amount = parseFloat($("#amount").val());
+      const paymentSelected = $(".payment-option.active").length > 0;
+
+      // Clear previous errors
+      $("#errorMessage").addClass("d-none");
+
+      if (!amount || amount <= 0) {
+        showError("Please enter a valid donation amount.");
+      } else if (!paymentSelected) {
+        showError("Please select a payment method before proceeding.");
+      } else {
+        $("#step1").hide();
+        $("#step2").removeClass("d-none");
+        $("#donationAmount").text(amount.toFixed(2));
+      }
+    });
+
+    // 🧠 Error message handler
+    function showError(message) {
+      $("#errorMessage").text(message).removeClass("d-none");
+      setTimeout(() => {
+        $("#errorMessage").addClass("d-none");
+      }, 3000);
+    }
+
+    // ✅ Confirm payment and show success
+    $("#paymentSuccessBtn").click(function () {
+      $("#step2").addClass("d-none");
+      $("#step3").removeClass("d-none");
+    });
+  });
+</script>
+
+
+
+
+<!-- Bootstrap Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+<!-- jQuery (optional, only if needed) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+<!-- Feather Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+<!-- Custom JS -->
+<script src="/BloodBridgeApp/assets/js/site.js"></script>
+
+<!-- Inline Scripts -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Activate Feather Icons
+    feather.replace();
+
+    // Accordion toggle logic
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const body = this.nextElementSibling;
+        body.style.display = body.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Set current year in footer
+    const yearSpan = document.getElementById("year");
+    if (yearSpan) {
+      yearSpan.textContent = new Date().getFullYear();
+    }
+  });
+
+  // Optional: Manual toggle function (if used elsewhere)
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    item.classList.toggle("open");
+  }
+</script>
+
+
+
+</body>
+</html>
