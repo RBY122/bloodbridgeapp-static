@@ -13,10 +13,15 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
+      { "source": "/about", "destination": "/pages/about.html" },
+      { "source": "/support", "destination": "/pages/support.html" },
+      { "source": "/SignIn", "destination": "/pages/SignIn.html" },
+      { "source": "/SignUp", "destination": "/pages/SignUp.html" },
+      { "source": "/dashboard", "destination": "/pages/Dashboard.html" },
+      { "source": "/Profile", "destination": "/pages/Profile.html" },
+      { "source": "/Donations", "destination": "/pages/Donations.html" },
+      { "source": "/Events", "destination": "/pages/Events.html" },
+      { "source": "/index.html", "destination": "/pages/index.html" }
     ]
   }
 }
