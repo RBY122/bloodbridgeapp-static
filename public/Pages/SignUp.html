@@ -210,7 +210,59 @@
 </script>
 
 
+<script type="module">
+  import { auth } from './firebase.js';
+  import {
+    createUserWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
+  const signupForm = document.getElementById("signupForm");
+  const alertBox = document.getElementById("alertBox");
+
+  signupForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fullName = signupForm.fullName?.value.trim();
+    const email = signupForm.email?.value.trim();
+    const password = signupForm.password?.value;
+    const confirmPassword = signupForm.confirmPassword?.value;
+
+    if (!email || !password || !confirmPassword || !fullName) {
+      showAlert("Please fill in all fields.", "danger");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      showAlert("Passwords do not match.", "danger");
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: fullName });
+
+      showAlert("Signup successful! Redirecting...", "success");
+      setTimeout(() => (window.location.href = "/dashboard.html"), 1500);
+    } catch (err) {
+      showAlert("Signup failed: " + err.message, "danger");
+    }
+  });
+
+  function showAlert(message, type = "danger") {
+    if (!alertBox) return;
+    alertBox.className = `alert alert-${type}`;
+    alertBox.textContent = message;
+    alertBox.classList.remove("d-none");
+  }
+</script>
+
+  <footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+      <p class="mb-0">© <span id="year"></span> BloodBridge. All rights reserved.</p>
+      <p class="mb-0">Developed by Richard Boakye Yiadom</p>
+    </div>
+  </footer>
 
 
 
