@@ -202,5 +202,57 @@
     });
   </script>
 
+  <script type="module">
+  import { auth } from './firebase.js';
+  import {
+    signInWithEmailAndPassword,
+    setPersistence,
+    browserSessionPersistence,
+    browserLocalPersistence
+  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+  const loginForm = document.getElementById("loginForm");
+  const alertBox = document.getElementById("alertBox");
+  const passwordInput = document.getElementById("password");
+  const togglePassword = document.getElementById("togglePassword");
+  const rememberMe = document.getElementById("rememberMe");
+
+  togglePassword?.addEventListener("click", () => {
+    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+  });
+
+  loginForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = loginForm.email.value.trim();
+    const password = loginForm.password.value;
+    const remember = rememberMe?.checked;
+
+    try {
+      const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
+      await setPersistence(auth, persistence);
+      await signInWithEmailAndPassword(auth, email, password);
+
+      showAlert("Welcome back! Redirecting...", "success");
+      setTimeout(() => (window.location.href = "/dashboard.html"), 1500);
+    } catch (err) {
+      showAlert("Login failed: " + err.message, "danger");
+    }
+  });
+
+  function showAlert(message, type = "danger") {
+    if (!alertBox) return;
+    alertBox.className = `alert alert-${type}`;
+    alertBox.textContent = message;
+    alertBox.classList.remove("d-none");
+  }
+</script>
+
+<footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+      <p class="mb-0">© <span id="year"></span> BloodBridge. All rights reserved.</p>
+      <p class="mb-0">Developed by Richard Boakye Yiadom</p>
+    </div>
+  </footer
+
 </body>
 </html>
