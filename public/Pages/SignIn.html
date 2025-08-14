@@ -9,14 +9,10 @@
 
   <!-- Bootstrap 5 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous" />
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />
-
   <!-- Custom Styles -->
   <link rel="stylesheet" href="/styles/main.css" />
-
-  <script type="module" src="/public/scripts/site.js"></script>
 
   <style>
     body {
@@ -41,6 +37,7 @@
     <div class="container-fluid">
       <a class="navbar-brand fw-bold d-flex align-items-center" href="../index.html">
         <img src="../assets/logo.jpg" alt="BloodBridge Logo" width="40" class="me-2" />
+        BloodBridge
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,12 +74,19 @@
           <input type="password" id="password" class="form-control" required />
           <span class="text-danger d-none">This field is required.</span>
         </div>
+        <div class="mb-3 text-end">
+          <button type="button" id="togglePassword" class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-eye"></i> Show Password
+          </button>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="rememberMe" />
+          <label class="form-check-label" for="rememberMe">Remember Me</label>
+        </div>
         <button type="submit" class="btn btn-danger w-100">Sign In</button>
       </form>
 
-      <div id="successPopup" class="alert alert-success mt-3 d-none text-center">
-        Signed in successfully!
-      </div>
+      <div id="alertBox" class="alert d-none mt-3 text-center"></div>
 
       <div class="mt-3 text-center">
         <p>Don't have an account? <a href="../Pages/SignUp.html">Sign Up</a></p>
@@ -91,108 +95,83 @@
     </div>
   </main>
 
-  
-<script type="module">
-  import { auth } from './firebase.js';
-  import {
-    signInWithEmailAndPassword,
-    setPersistence,
-    browserSessionPersistence,
-    browserLocalPersistence,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+  <!-- Firebase Auth Logic -->
+  <script type="module">
+    import { auth } from './firebase.js';
+    import {
+      signInWithEmailAndPassword,
+      setPersistence,
+      browserSessionPersistence,
+      browserLocalPersistence,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // ✅ Feather Icons
-    feather.replace();
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginForm = document.getElementById("loginForm");
+      const alertBox = document.getElementById("alertBox");
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+      const rememberMe = document.getElementById("rememberMe");
 
-    // ✅ Accordion Toggle
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        header.classList.toggle('active');
-        const body = header.nextElementSibling;
-        body.style.display = body.style.display === 'block' ? 'none' : 'block';
+      togglePassword?.addEventListener("click", () => {
+        passwordInput.type = passwordInput.type === "password" ? "text" : "password";
       });
-    });
 
-    // ✅ Smooth Scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
+      loginForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
-        document.querySelector(anchor.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
+
+        const email = loginForm.email?.value.trim();
+        const password = loginForm.password?.value;
+        const remember = rememberMe?.checked;
+
+        if (!email || !password) {
+          showAlert("Please enter both email and password.", "danger");
+          return;
+        }
+
+        try {
+          const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
+          await setPersistence(auth, persistence);
+
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          console.log("Logged in user:", userCredential.user);
+
+          showAlert("Welcome back! Redirecting...", "success");
+
+          onAuthStateChanged(auth, (user) => {
+            if (user) {
+              setTimeout(() => {
+                window.location.href = "/Pages/dashboard.html";
+              }, 1000);
+            }
+          });
+        } catch (err) {
+          console.error("Login error:", err);
+          showAlert("Login failed: " + err.message, "danger");
+        }
       });
-    });
 
-    // ✅ Footer Year
-    const yearSpan = document.getElementById("year");
-    if (yearSpan) {
-      yearSpan.textContent = new Date().getFullYear();
-    }
-
-    // ✅ Login Form Logic
-    const loginForm = document.getElementById("loginForm");
-    const alertBox = document.getElementById("alertBox");
-    const passwordInput = document.getElementById("password");
-    const togglePassword = document.getElementById("togglePassword");
-    const rememberMe = document.getElementById("rememberMe");
-
-    // Toggle password visibility
-    togglePassword?.addEventListener("click", () => {
-      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
-    });
-
-    loginForm?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const email = loginForm.email?.value.trim();
-      const password = loginForm.password?.value;
-      const remember = rememberMe?.checked;
-
-      if (!email || !password) {
-        showAlert("Please enter both email and password.", "danger");
-        return;
+      function showAlert(message, type = "danger") {
+        if (!alertBox) return;
+        alertBox.className = `alert alert-${type}`;
+        alertBox.textContent = message;
+        alertBox.classList.remove("d-none");
       }
 
-      try {
-        const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
-        await setPersistence(auth, persistence);
-
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log("Logged in user:", userCredential.user);
-
-        showAlert("Welcome back! Redirecting...", "success");
-
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            setTimeout(() => {
-              window.location.href = "/Pages/dashboard.html";
-            }, 1000);
-          }
-        });
-      } catch (err) {
-        console.error("Login error:", err);
-        showAlert("Login failed: " + err.message, "danger");
+      // Footer Year
+      const yearSpan = document.getElementById("year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
       }
     });
+  </script>
 
-    function showAlert(message, type = "danger") {
-      if (!alertBox) return;
-      alertBox.className = `alert alert-${type}`;
-      alertBox.textContent = message;
-      alertBox.classList.remove("d-none");
-    }
-  });
-</script>
-
-<footer class="bg-dark text-white text-center py-3">
+  <footer class="bg-dark text-white text-center py-3">
     <div class="container">
       <p class="mb-0">© <span id="year"></span> BloodBridge. All rights reserved.</p>
       <p class="mb-0">Developed by Richard Boakye Yiadom</p>
     </div>
-  </footer
-
+  </footer>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 // firebase.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"; // Optional
 
@@ -19,4 +19,4 @@ const app = initializeApp(firebaseConfig);
 // 🔐 Export Firebase services
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const rtdb = getDatabase(app); // Optional if using Realtime DB
+export const rtdb = getDatabase(app); // Optional
