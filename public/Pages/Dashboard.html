@@ -80,22 +80,54 @@
     <div class="mt-4">
   <div class="card action-btn" id="btnSchedule"><i class="fas fa-calendar-check"></i> Schedule Donation</div>
   <div class="card action-btn" id="btnForum"><i class="fas fa-comments"></i> Join Chat Forum</div>
-  <div class="card action-btn" id="btnImpact"><i class="fas fa-chart-line"></i> View Impact Dashboard</div>
   <div class="card action-btn" id="btnProfile"><i class="fas fa-cog"></i> Manage Profile & Settings</div>
 </div>
 
     <!-- Real-time Notification -->
-    <div class="card notification-banner mt-4">
-      <i class="fas fa-bell"></i>
-      <span>Real-time Notifications</span>
+    <div class="card notification-banner mt-4" id="notificationBanner">
+  <i class="fas fa-bell"></i>
+  <span>Real-time Notifications</span>
+</div>
+
+    <!-- Accordion Section -->
+    <div class="accordion mt-4" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            Blood Donation FAQs
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p>What is the minimum age for blood donation?</p>
+            <p>How often can I donate blood?</p>
+            <p>What should I do before donating blood?</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Blood Donation Process
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p>The blood donation process is simple and safe. It typically takes about 30 minutes.</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
-    <a href="#"><i class="fas fa-hand-holding-heart active"></i><span>Drive</span></a>
-    <a href="#"><i class="fas fa-notes-medical"></i><span>Tips</span></a>
-    <a href="#"><i class="fas fa-user-circle"></i><span>Profile</span></a>
+    <a href="/public/Pages/Drive.html"><i class="fas fa-hand-holding-heart active"></i><span>Drive</span></a>
+    <a href="/public/Pages/Tips.html"><i class="fas fa-notes-medical"></i><span>Tips</span></a>
+    <a href="/public/Pages/Profile.html"><i class="fas fa-user-circle"></i><span>Profile</span></a>
   </div>
 
 

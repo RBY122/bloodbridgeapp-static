@@ -262,28 +262,3 @@ document.querySelectorAll('.bottom-nav div').forEach(item => {
   });
 });
 
-const notificationCard = document.getElementById('notificationCard');
-const notificationText = document.getElementById('notificationText');
-const bellIcon = notificationCard.querySelector('.fa-bell');
-
-const alerts = [
-  "Urgent: Blood needed at Kumasi South Hospital",
-  "New donor registered near your location",
-  "Reminder: Donation Drive starts tomorrow",
-  "System update: Chat forum now live"
-];
-
-function showNotification() {
-  const randomAlert = alerts[Math.floor(Math.random() * alerts.length)];
-  notificationText.textContent = randomAlert;
-  bellIcon.classList.add('pulse-alert');
-
-  setTimeout(() => {
-    bellIcon.classList.remove('pulse-alert');
-  }, 1000);
-}
-
-// Trigger every 15–30 seconds randomly
-setInterval(() => {
-  if (Math.random() > 0.5) showNotification();
-}, 20000);
