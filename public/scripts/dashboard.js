@@ -135,3 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+document.getElementById("btnSchedule").onclick = () => window.location.href = "Appointments.html";
+document.getElementById("btnForum").onclick = () => window.location.href = "Forum.html";
+document.getElementById("btnProfile").onclick = () => window.location.href = "Profile.html";
