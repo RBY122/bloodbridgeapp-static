@@ -77,7 +77,6 @@
     <div class="container-fluid">
       <a class="navbar-brand fw-bold d-flex align-items-center" href="../index.html">
         <img src="../assets/logo.jpg" alt="BloodBridge Logo" width="40" class="me-2" />
-        BloodBridge
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,35 +97,44 @@
     </div>
   </nav>
 
-  <!-- Dashboard Content -->
   <div class="container mt-4">
-    <div class="section-title">Get help fast</div>
-    <div class="card-option">
-      <div><i class="fas fa-bell"></i> Real-time Notifications</div>
-      <div>&gt;</div>
-    </div>
-    <div class="card-option">
-      <div><i class="fas fa-calendar-alt"></i> Donation Schedule</div>
-      <div>&gt;</div>
-    </div>
+  <!-- Section Title -->
+  <div class="section-title">Get help fast</div>
 
-    <div class="section-title">Be prepared</div>
-    <div class="card-option">
-      <div><i class="fas fa-comments"></i> Chat Forum</div>
-      <div>&gt;</div>
-    </div>
-
-    <div class="illustration">
-      <img src="../assets/illustration.png" alt="Emergency Response Illustration" />
-    </div>
+  <!-- Real-time Notifications Card -->
+<div id="notificationCard" class="card-option text-dark d-flex justify-content-between align-items-center">
+  <div class="d-flex align-items-center gap-2">
+    <i class="fas fa-bell"></i>
+    <span id="notificationText">No new alerts</span>
   </div>
+  <i class="fas fa-chevron-right"></i>
+</div>
+
+  <!-- Donation Schedule Card -->
+  <a href="../Pages/Appointments.html" class="card-option text-decoration-none text-dark" role="button" aria-label="View Donation Schedule">
+    <div><i class="fas fa-calendar-alt"></i> Donation Schedule</div>
+    <div>&gt;</div>
+  </a>
+
+  <!-- Chat Forum Card -->
+  <a href="../Pages/Forum.html" class="card-option text-decoration-none text-dark" role="button" aria-label="Join Chat Forum">
+    <div><i class="fas fa-comments"></i> Chat Forum</div>
+    <div>&gt;</div>
+  </a>
+
 
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
-    <div><i class="fas fa-star active"></i></div>
-    <div><i class="fas fa-shield-alt"></i></div>
-    <div><i class="fas fa-user"></i></div>
-  </div>
+  <a href="/public/Pages/Drive.html">
+    <div><i class="fas fa-hand-holding-heart active"></i><span>Donation Drive</span></div>
+  </a>
+  <a href="/public/Pages/Tips.html">
+    <div><i class="fas fa-notes-medical"></i><span>Health Tips</span></div>
+  </a>
+  <a href="/public/Pages/Profile.html">
+    <div><i class="fas fa-user-circle"></i><span>Profile</span></div>
+  </a>
+</div>
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
