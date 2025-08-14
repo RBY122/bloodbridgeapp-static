@@ -147,14 +147,16 @@
 
 <!-- Inline Scripts -->
 <script>
+  // ✅ Define logout globally
+  function logout() {
+    localStorage.removeItem("user"); // Clear user session
+    window.location.href = "login.html"; // Redirect to login page
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     // Activate Feather Icons
     feather.replace();
 
-    function logout() {
-  localStorage.removeItem("user"); // Clear user session
-  window.location.href = "login.html"; // Redirect to login page
-}
     // Accordion toggle logic
     document.querySelectorAll('.accordion-header').forEach(header => {
       header.addEventListener('click', function () {
@@ -171,13 +173,12 @@
     }
   });
 
-  // Optional: Manual toggle function (if used elsewhere)
+  // Optional: Manual toggle function
   function toggleAccordion(header) {
     const item = header.parentElement;
     item.classList.toggle("open");
   }
 </script>
-
 
 
 </body>
