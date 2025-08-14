@@ -262,3 +262,19 @@ document.querySelectorAll('.bottom-nav div').forEach(item => {
   });
 });
 
+// auth.js — Session Checker for BloodBridge
+
+(function () {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user) {
+    // Not logged in — redirect to login page
+    window.location.href = "/Pages/SignIn.html";
+  } else {
+    // Optional: personalize UI
+    const welcomeEl = document.getElementById("welcomeUser");
+    if (welcomeEl) {
+      welcomeEl.textContent = `Welcome, ${user.name}`;
+    }
+  }
+})();
