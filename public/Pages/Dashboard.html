@@ -59,64 +59,41 @@
       </div>
     </div>
   </nav>
-
-  <!-- Dashboard Container -->
-  <main class="container mt-5 pt-5">
-    <div class="text-center mb-4">
-      <h2>Welcome, <span id="userName">User</span></h2>
-      <p class="lead">Your personalized blood donation dashboard</p>
+  <div class="container mt-4">
+    <!-- Get Help Fast -->
+    <div class="section-title">Get help fast</div>
+    <div class="card-option">
+      <div><i class="fas fa-bell"></i> Real-time Notifications</div>
+      <div>&gt;</div>
+    </div>
+    <div class="card-option">
+      <div><i class="fas fa-calendar-alt"></i> Donation Schedule</div>
+      <div>&gt;</div>
     </div>
 
-    <!-- Real-Time Notifications -->
-    <section class="mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-danger text-white">
-          <i class="fas fa-bell"></i> Real-Time Notifications
-        </div>
-        <div class="card-body" id="notificationsPanel">
-          <p class="text-muted">No urgent alerts at the moment.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Donation Schedule -->
-    <section class="mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-danger text-white">
-          <i class="fas fa-calendar-alt"></i> Your Donation Schedule
-        </div>
-        <div class="card-body" id="schedulePanel">
-          <p class="text-muted">You have no upcoming appointments.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Chat Forum -->
-    <section class="mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-danger text-white">
-          <i class="fas fa-comments"></i> Chat Forum
-        </div>
-        <div class="card-body" id="chatForum">
-          <div class="mb-3">
-            <textarea class="form-control" id="chatInput" rows="3" placeholder="Share your story..."></textarea>
-            <button class="btn btn-danger mt-2" id="postMessage">Post</button>
-          </div>
-          <div id="chatMessages">
-            <p class="text-muted">No messages yet. Be the first to share!</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-3 mt-5">
-    <div class="container">
-      <p class="mb-0">© <span id="year"></span> BloodBridge. All rights reserved.</p>
-      <p class="mb-0">Developed by Richard Boakye Yiadom</p>
+    <!-- Be Prepared -->
+    <div class="section-title">Be prepared</div>
+    <div class="card-option">
+      <div><i class="fas fa-comments"></i> Chat Forum</div>
+      <div>&gt;</div>
     </div>
-  </footer>
+
+    <!-- Illustration -->
+    <div class="illustration">
+      <img src="../assets/illustration.png" alt="Hero Illustration" />
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div><i class="fas fa-star active"></i></div>
+    <div><i class="fas fa-shield-alt"></i></div>
+    <div><i class="fas fa-user"></i></div>
+  </div>
+
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
 
   <!-- Scripts -->
   <script src="../scripts/dashboard.js"></script>
