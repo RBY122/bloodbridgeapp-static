@@ -118,3 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderMessages();
 });
+
+document.getElementById("btnSchedule").onclick = () => window.location.href = "Appointments.html";
+document.getElementById("btnForum").onclick = () => window.location.href = "Forum.html";
+document.getElementById("btnImpact").onclick = () => window.location.href = "Impact.html";
+document.getElementById("btnProfile").onclick = () => window.location.href = "Profile.html";
