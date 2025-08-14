@@ -27,12 +27,8 @@
       padding: 20px;
       border-radius: 8px;
     }
-    .info-box {
-      background-color: white;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      padding: 20px;
-      margin-top: 20px;
+    .card-header i {
+      margin-right: 8px;
     }
   </style>
 </head>
@@ -64,24 +60,57 @@
     </div>
   </nav>
 
-  <!-- Dashboard Content -->
+  <!-- Dashboard Container -->
   <main class="container mt-5 pt-5">
-    <div class="dashboard-header text-center">
-      <h2>Welcome to Your Dashboard</h2>
-      <p class="mb-0">Manage your donations, appointments, and emergency alerts</p>
+    <div class="text-center mb-4">
+      <h2>Welcome, <span id="userName">User</span></h2>
+      <p class="lead">Your personalized blood donation dashboard</p>
     </div>
 
-    <div id="alertBox" class="alert d-none mt-3 text-center"></div>
+    <!-- Real-Time Notifications -->
+    <section class="mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+          <i class="fas fa-bell"></i> Real-Time Notifications
+        </div>
+        <div class="card-body" id="notificationsPanel">
+          <p class="text-muted">No urgent alerts at the moment.</p>
+        </div>
+      </div>
+    </section>
 
-    <div class="info-box">
-      <h4>User Information</h4>
-      <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
-      <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
-    </div>
+    <!-- Donation Schedule -->
+    <section class="mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+          <i class="fas fa-calendar-alt"></i> Your Donation Schedule
+        </div>
+        <div class="card-body" id="schedulePanel">
+          <p class="text-muted">You have no upcoming appointments.</p>
+        </div>
+      </div>
+    </section>
 
-    <!-- Future sections like appointments, donation history, etc. can go here -->
+    <!-- Chat Forum -->
+    <section class="mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+          <i class="fas fa-comments"></i> Chat Forum
+        </div>
+        <div class="card-body" id="chatForum">
+          <div class="mb-3">
+            <textarea class="form-control" id="chatInput" rows="3" placeholder="Share your story..."></textarea>
+            <button class="btn btn-danger mt-2" id="postMessage">Post</button>
+          </div>
+          <div id="chatMessages">
+            <p class="text-muted">No messages yet. Be the first to share!</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <!-- Footer -->
   <footer class="bg-dark text-white text-center py-3 mt-5">
     <div class="container">
       <p class="mb-0">© <span id="year"></span> BloodBridge. All rights reserved.</p>
@@ -89,16 +118,23 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="../scripts/dashboard.js"></script>
-<script>
-  // 🕒 Footer Year
-  const yearSpan = document.getElementById("year");
-  if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-  }
-</script>
-   
- 
+  <script>
+    // 🕒 Footer Year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
+    // 🧍 Dynamic User Name (optional fallback)
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.name) {
+      document.getElementById("userName").textContent = user.name;
+    }
+
+    // 🔓 Logout Button
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "../Pages/SignIn.html";
+    });
+  </script>
 </body>
 </html>
