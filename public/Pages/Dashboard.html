@@ -1,164 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - BloodBridge</title>
-  <meta name="description" content="Your BloodBridge dashboard for managing donations, appointments, and emergency alerts." />
-  <meta name="author" content="Richard Boakye Yiadom" />
-
-  <!-- Bootstrap 5 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="/styles/main.css" />
-
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f8f9fa;
-      padding-top: 70px;
-      padding-bottom: 80px;
-    }
-    .section-title {
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin: 20px 0 10px;
-      color: #dc3545;
-    }
-    .card-option {
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-    }
-    .card-option i {
-      color: #dc3545;
-      margin-right: 10px;
-    }
-    .illustration {
-      text-align: center;
-      margin: 30px 0;
-    }
-    .illustration img {
-      max-width: 150px;
-      height: auto;
-    }
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: #fff;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-    }
-    .bottom-nav i {
-      font-size: 1.4rem;
-      color: #6c757d;
-    }
-    .bottom-nav .active {
-      color: #dc3545;
-    }
-  </style>
+  <title>BloodBridge Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="styles/dashboard.css" />
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold d-flex align-items-center" href="../index.html">
-        <img src="../assets/logo.jpg" alt="BloodBridge Logo" width="40" class="me-2" />
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <!-- Header -->
+  <nav class="navbar bg-danger text-white px-3">
+    <img src="assets/logo.jpg" alt="BloodBridge Logo" width="40" class="me-2" />
+    <span class="fw-bold fs-5">BloodBridge</span>
+  </nav>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link text-white" href="../index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="../Pages/Support.html">Support</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="../Pages/AboutUs.html">About</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="../Pages/Privacy.html">Privacy</a></li>
-        </ul>
-        <div class="d-flex">
-          <button id="logoutBtn" class="btn btn-outline-light">Sign Out</button>
+  <!-- Welcome -->
+  <div class="container mt-4">
+    <h4 class="fw-bold text-dark">Welcome, Richard</h4>
+
+    <!-- Status Cards -->
+    <div class="row g-3 mt-3">
+      <div class="col-6">
+        <div class="card status-card">
+          <i class="fas fa-tint"></i>
+          <div>
+            <h6>Next Donation</h6>
+            <p>Scheduled for Aug 20, 2025</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card status-card alert-card pulse-alert">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>
+            <h6>Emergency Alerts</h6>
+            <p>Blood needed at Kumasi South Hospital</p>
+          </div>
         </div>
       </div>
     </div>
-  </nav>
 
-  <div class="container mt-4">
-  <!-- Section Title -->
-  <div class="section-title">Get help fast</div>
+    <!-- Action Buttons -->
+    <div class="mt-4">
+      <div class="card action-btn"><i class="fas fa-calendar-check"></i> Schedule Donation</div>
+      <div class="card action-btn"><i class="fas fa-comments"></i> Join Chat Forum</div>
+      <div class="card action-btn"><i class="fas fa-chart-line"></i> View Impact Dashboard</div>
+      <div class="card action-btn"><i class="fas fa-cog"></i> Manage Profile & Settings</div>
+    </div>
 
-  <!-- Real-time Notifications Card -->
-<div id="notificationCard" class="card-option text-dark d-flex justify-content-between align-items-center">
-  <div class="d-flex align-items-center gap-2">
-    <i class="fas fa-bell"></i>
-    <span id="notificationText">No new alerts</span>
+    <!-- Real-time Notification -->
+    <div class="card notification-banner mt-4">
+      <i class="fas fa-bell"></i>
+      <span>Real-time Notifications</span>
+    </div>
   </div>
-  <i class="fas fa-chevron-right"></i>
-</div>
-
-  <!-- Donation Schedule Card -->
-  <a href="../Pages/Appointments.html" class="card-option text-decoration-none text-dark" role="button" aria-label="View Donation Schedule">
-    <div><i class="fas fa-calendar-alt"></i> Donation Schedule</div>
-    <div>&gt;</div>
-  </a>
-
-  <!-- Chat Forum Card -->
-  <a href="../Pages/Forum.html" class="card-option text-decoration-none text-dark" role="button" aria-label="Join Chat Forum">
-    <div><i class="fas fa-comments"></i> Chat Forum</div>
-    <div>&gt;</div>
-  </a>
-
 
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
-  <a href="/public/Pages/Drive.html">
-    <div><i class="fas fa-hand-holding-heart active"></i><span>Donation Drive</span></div>
-  </a>
-  <a href="/public/Pages/Tips.html">
-    <div><i class="fas fa-notes-medical"></i><span>Health Tips</span></div>
-  </a>
-  <a href="/public/Pages/Profile.html">
-    <div><i class="fas fa-user-circle"></i><span>Profile</span></div>
-  </a>
-</div>
+    <a href="#"><i class="fas fa-hand-holding-heart active"></i><span>Drive</span></a>
+    <a href="#"><i class="fas fa-notes-medical"></i><span>Tips</span></a>
+    <a href="#"><i class="fas fa-user-circle"></i><span>Profile</span></a>
+  </div>
 
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-  <script src="../scripts/dashboard.js"></script>
-  <script>
-    // 🕒 Footer Year
-    const yearEl = document.getElementById("year");
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    // 🧍 Dynamic User Name
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userNameEl = document.getElementById("userName");
-    if (user && user.name && userNameEl) {
-      userNameEl.textContent = user.name;
-    }
-
-    // 🔓 Logout Button
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", () => {
-        localStorage.removeItem("isLoggedIn");
-        window.location.href = "../Pages/SignIn.html";
-      });
-    }
-  </script>
 </body>
 </html>
