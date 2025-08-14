@@ -105,95 +105,19 @@
     </div>
   </main>
 
-  <!-- Firebase Signup Logic -->
-  <script type="module">
-    import { auth } from './firebase.js';
-    import {
-      createUserWithEmailAndPassword,
-      updateProfile,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const signUpForm = document.getElementById("signUpForm");
-      const alertBox = document.getElementById("alertBox");
-      const successPopup = document.getElementById("successPopup");
-
-      signUpForm?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        let isValid = true;
-
-        // Validate required fields
-        signUpForm.querySelectorAll("input[required]").forEach(input => {
-          if (!input.value.trim()) {
-            input.classList.add("is-invalid");
-            input.nextElementSibling?.classList.remove("d-none");
-            isValid = false;
-          } else {
-            input.classList.remove("is-invalid");
-            input.nextElementSibling?.classList.add("d-none");
-          }
-        });
-
-        const password = signUpForm.password?.value;
-        const confirmPassword = signUpForm.confirmPassword?.value;
-        const fullName = signUpForm.fullName?.value.trim();
-        const email = signUpForm.email?.value.trim();
-        const termsCheckbox = signUpForm.terms;
-
-        if (password !== confirmPassword) {
-          showAlert("Passwords do not match.", "danger");
-          isValid = false;
-        }
-
-        if (!termsCheckbox?.checked) {
-          termsCheckbox.nextElementSibling?.classList.remove("d-none");
-          isValid = false;
-        } else {
-          termsCheckbox.nextElementSibling?.classList.add("d-none");
-        }
-
-        if (!isValid) return;
-
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          await updateProfile(userCredential.user, { displayName: fullName });
-
-          console.log("User signed up:", userCredential.user);
-          showAlert("Signup successful! Redirecting...", "success");
-
-          successPopup?.classList.remove("d-none");
-          signUpForm.reset();
-          setTimeout(() => successPopup?.classList.add("d-none"), 3000);
-
-          onAuthStateChanged(auth, (user) => {
-            if (user) {
-              setTimeout(() => {
-                window.location.href = "/dashboard.html";
-              }, 1000);
-            }
-          });
-        } catch (err) {
-          console.error("Signup error:", err);
-          showAlert("Signup failed: " + err.message, "danger");
-        }
-      });
-
-      function showAlert(message, type = "danger") {
-        if (!alertBox) return;
-        alertBox.className = `alert alert-${type}`;
-        alertBox.textContent = message;
-        alertBox.classList.remove("d-none");
-      }
-
-      // Footer Year
-      const yearSpan = document.getElementById("year");
-      if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-      }
-    });
-  </script>
+  <script src="../scripts/signup.js"></script>
 
   <footer class="bg-dark text-white text-center py-3">
     <div class="container">
-      <p class="mb-0">© <span id="year"></span> BloodBridge. All rights reserved.</p
+      <p class="mb-0">© <span id="year"></span> BloodBridge. All rights reserved.</p>
+      <p class="mb-0">Made with ❤️ by Richard Boakye Yiadom</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+   
+</body>
+</html>
