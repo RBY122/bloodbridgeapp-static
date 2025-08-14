@@ -1,18 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------
-  // 1. Initialize Bootstrap Dropdowns
+  // 1. Bootstrap Dropdowns
   // ----------------------------
   document.querySelectorAll(".dropdown-toggle").forEach(trigger => {
     new bootstrap.Dropdown(trigger);
   });
 
   // ----------------------------
-  // 2. Improve FAQ Toggle with Dynamic Text Updates
+  // 2. FAQ Toggle Text
   // ----------------------------
   document.addEventListener("click", event => {
     const button = event.target.closest(".card button");
-    if (!button) return;
-    const collapseElement = button.closest(".card")?.querySelector(".collapse");
+    const collapseElement = button?.closest(".card")?.querySelector(".collapse");
     if (collapseElement) {
       collapseElement.addEventListener("shown.bs.collapse", () => {
         button.textContent = "🔽 Collapse Answer";
@@ -24,44 +23,44 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // ----------------------------
-  // 3. Maintain Footer Visibility
+  // 3. Footer Padding
   // ----------------------------
   document.body.style.paddingBottom = "80px";
 
   // ----------------------------
-  // 4. Password Visibility Toggle & Validation
+  // 4. Password Toggle & Validation
   // ----------------------------
   const passwordInput = document.getElementById("password");
   const togglePasswordButton = document.getElementById("toggle-password");
+
   if (passwordInput && togglePasswordButton) {
     togglePasswordButton.addEventListener("click", () => {
-      const isPasswordHidden = passwordInput.type === "password";
-      passwordInput.type = isPasswordHidden ? "text" : "password";
-      togglePasswordButton.textContent = isPasswordHidden ? "Hide password" : "Show password";
-      // Update accessibility label accordingly
-      togglePasswordButton.setAttribute(
-        "aria-label",
-        isPasswordHidden
-          ? "Hide password."
-          : "Show password as plain text. Warning: this will display your password on the screen."
-      );
+      const isHidden = passwordInput.type === "password";
+      passwordInput.type = isHidden ? "text" : "password";
+      togglePasswordButton.textContent = isHidden ? "Hide password" : "Show password";
+      togglePasswordButton.setAttribute("aria-label", isHidden
+        ? "Hide password."
+        : "Show password as plain text. Warning: this will display your password on the screen.");
     });
-    // Clear custom validity when the input changes
+
     passwordInput.addEventListener("input", () => passwordInput.setCustomValidity(""));
   }
+
   function validatePassword() {
     if (!passwordInput) return;
-    let validationMessages = [];
-    const passwordValue = passwordInput.value;
-    if (passwordValue.length < 8) validationMessages.push("At least eight characters.");
-    if (!/[A-Z]/.test(passwordValue)) validationMessages.push("At least one uppercase letter.");
-    if (!/[a-z]/.test(passwordValue)) validationMessages.push("At least one lowercase letter.");
-    if (!/\d/.test(passwordValue)) validationMessages.push("At least one number.");
-    if (!/[@$!%*?&]/.test(passwordValue)) validationMessages.push("At least one special character (@, $, !, etc.).");
-    passwordInput.setCustomValidity(validationMessages.join(" "));
+    const value = passwordInput.value;
+    const messages = [];
+    if (value.length < 8) messages.push("At least eight characters.");
+    if (!/[A-Z]/.test(value)) messages.push("At least one uppercase letter.");
+    if (!/[a-z]/.test(value)) messages.push("At least one lowercase letter.");
+    if (!/\d/.test(value)) messages.push("At least one number.");
+    if (!/[@$!%*?&]/.test(value)) messages.push("At least one special character.");
+    passwordInput.setCustomValidity(messages.join(" "));
   }
+
   const form = document.querySelector("form");
   const signinButton = document.querySelector("button#sign-in");
+
   if (form && signinButton) {
     form.addEventListener("submit", event => {
       event.preventDefault();
@@ -69,55 +68,55 @@ document.addEventListener("DOMContentLoaded", function () {
       form.reportValidity();
       if (form.checkValidity()) {
         alert("Logging in!");
-        signinButton.disabled = true; // Prevent multiple submissions
+        signinButton.disabled = true;
       }
     });
   }
 
   // ----------------------------
-  // 5. Navigation Active Link Highlighting
+  // 5. Active Nav Highlight
   // ----------------------------
-  (function highlightNavLink() {
-    const currentPage = window.location.pathname.split("/").pop();
-    document.querySelectorAll(".nav-item a").forEach(link => {
-      if (link.href.includes(currentPage)) {
-        link.parentElement.classList.add("active");
-      }
-    });
-  })();
-
-  // ----------------------------
-  // 6. Payment Option Handling & Step Transition (jQuery)
-  // ----------------------------
-  $(function () {
-    $(".payment-option").click(function () {
-      $(".payment-option").removeClass("active");
-      $(this).addClass("active");
-    });
-    $("#continueBtn").click(function () {
-      let amount = $("#amount").val();
-      let paymentMethodSelected = $(".payment-option.active").length > 0;
-      $("#errorMessage").hide();
-      if (!amount || amount <= 0) {
-        showError("Please enter a valid donation amount.");
-      } else if (!paymentMethodSelected) {
-        showError("Please select a payment method before proceeding.");
-      } else {
-        $("#step1").hide();
-        $("#step2").fadeIn();
-      }
-    });
-    function showError(message) {
-      $("#errorMessage").text(message).fadeIn();
+  const currentPage = window.location.pathname.split("/").pop();
+  document.querySelectorAll(".nav-item a").forEach(link => {
+    if (link.href.includes(currentPage)) {
+      link.parentElement.classList.add("active");
     }
-    $("#paymentSuccessBtn").click(function () {
-      $("#step2").hide();
-      $("#step3").fadeIn();
-    });
   });
 
   // ----------------------------
-  // 7. Initialize Team Carousel
+  // 6. Payment Flow (jQuery)
+  // ----------------------------
+  $(".payment-option").click(function () {
+    $(".payment-option").removeClass("active");
+    $(this).addClass("active");
+  });
+
+  $("#continueBtn").click(function () {
+    const amount = $("#amount").val();
+    const methodSelected = $(".payment-option.active").length > 0;
+    $("#errorMessage").hide();
+
+    if (!amount || amount <= 0) {
+      showError("Please enter a valid donation amount.");
+    } else if (!methodSelected) {
+      showError("Please select a payment method.");
+    } else {
+      $("#step1").hide();
+      $("#step2").fadeIn();
+    }
+  });
+
+  function showError(message) {
+    $("#errorMessage").text(message).fadeIn();
+  }
+
+  $("#paymentSuccessBtn").click(function () {
+    $("#step2").hide();
+    $("#step3").fadeIn();
+  });
+
+  // ----------------------------
+  // 7. Team Carousel
   // ----------------------------
   const teamCarousel = document.querySelector('#teamCarousel');
   if (teamCarousel) {
@@ -125,114 +124,104 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ----------------------------
-  // 8. Initialize Select2 and Multi-step Form Navigation (jQuery)
+  // 8. Select2 & Form Steps (jQuery)
   // ----------------------------
-  $(function () {
-    $('.select2').select2();
-    $('.next-step').click(function () {
-      var currentStep = $(this).closest('.form-step');
-      var nextStep = currentStep.next('.form-step');
-      currentStep.hide();
-      nextStep.show();
+  $('.select2').select2();
+
+  $('.next-step').click(function () {
+    $(this).closest('.form-step').hide().next('.form-step').show();
+  });
+
+  $('.prev-step').click(function () {
+    $(this).closest('.form-step').hide().prev('.form-step').show();
+  });
+
+  // ----------------------------
+  // 9. Progress Bar & Step Navigation
+  // ----------------------------
+  const progressBar = document.querySelector("#completionBar");
+  const completionText = document.querySelector("#profileCompletion");
+  const profileFields = document.querySelectorAll("input, select, textarea");
+  const steps = document.querySelectorAll(".form-step");
+  let currentStep = 0;
+
+  function showStep(index) {
+    steps.forEach((step, i) => {
+      step.style.display = i === index ? "block" : "none";
     });
-    $('.prev-step').click(function () {
-      var currentStep = $(this).closest('.form-step');
-      var prevStep = currentStep.prev('.form-step');
-      currentStep.hide();
-      prevStep.show();
+  }
+
+  function updateProgress() {
+    const completed = Array.from(profileFields).filter(field =>
+      field.type === "checkbox" ? field.checked : field.value.trim() !== ""
+    ).length;
+    const percent = (completed / profileFields.length) * 100;
+    if (progressBar) {
+      progressBar.style.width = percent + "%";
+      progressBar.setAttribute("aria-valuenow", percent);
+    }
+    if (completionText) {
+      completionText.innerText = Math.round(percent) + "%";
+    }
+  }
+
+  profileFields.forEach(field => {
+    field.addEventListener("input", updateProgress);
+    field.addEventListener("change", updateProgress);
+  });
+
+  updateProgress();
+  showStep(currentStep);
+
+  document.querySelectorAll(".next-step").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+  });
+
+  document.querySelectorAll(".prev-step").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
     });
   });
 
   // ----------------------------
-  // 9. Multi-step Form Progress Bar & Navigation (Vanilla JS)
-  // ----------------------------
-  (function setupProgressAndNav() {
-    const progressBar = document.querySelector("#completionBar");
-    const completionText = document.querySelector("#profileCompletion");
-    const profileFields = document.querySelectorAll("input, select, textarea");
-    const steps = document.querySelectorAll(".form-step");
-    let currentStep = 0;
-  
-    function showStep(stepIndex) {
-      steps.forEach((step, index) => {
-        step.style.display = index === stepIndex ? "block" : "none";
-      });
-    }
-  
-    document.querySelectorAll(".next-step").forEach(button => {
-      button.addEventListener("click", () => {
-        if (currentStep < steps.length - 1) {
-          currentStep++;
-          showStep(currentStep);
-        }
-      });
-    });
-    document.querySelectorAll(".prev-step").forEach(button => {
-      button.addEventListener("click", () => {
-        if (currentStep > 0) {
-          currentStep--;
-          showStep(currentStep);
-        }
-      });
-    });
-  
-    function updateProgress() {
-      let completedFields = Array.from(profileFields).filter(field => {
-        return field.type === "checkbox" ? field.checked : field.value.trim() !== "";
-      }).length;
-      let percentage = (completedFields / profileFields.length) * 100;
-      if (progressBar) progressBar.style.width = percentage + "%";
-      if (progressBar) progressBar.setAttribute("aria-valuenow", percentage);
-      if (completionText) completionText.innerText = Math.round(percentage) + "%";
-    }
-  
-    profileFields.forEach(field => {
-      field.addEventListener("input", updateProgress);
-      field.addEventListener("change", updateProgress);
-    });
-  
-    updateProgress(); // Initialize progress tracking
-    showStep(currentStep); // Display the first step
-  })();
-
-  // ----------------------------
-  // 10. Persistent Dark Mode Toggle with localStorage
+  // 10. Dark Mode Toggle
   // ----------------------------
   const themeToggle = document.getElementById("theme-toggle");
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark-mode");
   }
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
-    });
-  }
+  themeToggle?.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+  });
 
   // ----------------------------
-  // 11. View More / View Less Toggle for Additional Details
+  // 11. View More / Less Toggle
   // ----------------------------
-  var collapseElement = document.getElementById("moreDetails");
-  var toggleDetailsBtn = document.getElementById("toggleDetailsBtn");
+  const collapseElement = document.getElementById("moreDetails");
+  const toggleDetailsBtn = document.getElementById("toggleDetailsBtn");
+
   if (collapseElement && toggleDetailsBtn) {
-    collapseElement.addEventListener("shown.bs.collapse", function() {
+    collapseElement.addEventListener("shown.bs.collapse", () => {
       toggleDetailsBtn.textContent = "Show Less";
     });
-    collapseElement.addEventListener("hidden.bs.collapse", function() {
+    collapseElement.addEventListener("hidden.bs.collapse", () => {
       toggleDetailsBtn.textContent = "View More Details";
     });
   }
 
-
-function toggleAccordion(header) {
-  const item = header.parentElement;
-  item.classList.toggle("open");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+  // ----------------------------
+  // 12. Counter Animation
+  // ----------------------------
   feather.replace();
-
-  // Counter Animation
   document.querySelectorAll('.counter').forEach(counter => {
     const target = +counter.getAttribute('data-target');
     let count = 0;
@@ -249,12 +238,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     update();
   });
-});
-
-
 
   // ----------------------------
-  // 12. Ensure Dropdown Closes Correctly After Selection on Mobile
+  // 13. Mobile Dropdown Close
   // ----------------------------
   document.addEventListener("click", event => {
     document.querySelectorAll(".dropdown-menu").forEach(dropdown => {
