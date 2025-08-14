@@ -43,7 +43,7 @@
         <li class="nav-item"><a class="nav-link text-white" href="../Pages/Privacy.html">Privacy</a></li>
         </ul>
         <div class="d-flex">
-          <button id="logoutBtn" class="btn btn-outline-light">Sign Out</button>
+          <button onclick="logout()" class="btn btn-outline-danger">Logout</button>
         </div>
       </div>
     </div>
@@ -151,6 +151,10 @@
     // Activate Feather Icons
     feather.replace();
 
+    function logout() {
+  localStorage.removeItem("user"); // Clear user session
+  window.location.href = "login.html"; // Redirect to login page
+}
     // Accordion toggle logic
     document.querySelectorAll('.accordion-header').forEach(header => {
       header.addEventListener('click', function () {
