@@ -118,6 +118,38 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
-   
+   <script>
+  // ✅ Define logout globally
+  function logout() {
+    localStorage.removeItem("user"); // Clear user session
+    window.location.href = "SignIn.html"; // Redirect to login page
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Activate Feather Icons
+    feather.replace();
+
+    // Accordion toggle logic
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const body = this.nextElementSibling;
+        body.style.display = body.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Set current year in footer
+    const yearSpan = document.getElementById("year");
+    if (yearSpan) {
+      yearSpan.textContent = new Date().getFullYear();
+    }
+  });
+
+  // Optional: Manual toggle function
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    item.classList.toggle("open");
+  }
+</script>
 </body>
 </html>
