@@ -21,14 +21,52 @@
       padding-top: 70px;
       padding-bottom: 80px;
     }
-    .dashboard-header {
-      background-color: #dc3545;
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
+    .section-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin: 20px 0 10px;
+      color: #dc3545;
     }
-    .card-header i {
-      margin-right: 8px;
+    .card-option {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .card-option i {
+      color: #dc3545;
+      margin-right: 10px;
+    }
+    .illustration {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .illustration img {
+      max-width: 150px;
+      height: auto;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .bottom-nav i {
+      font-size: 1.4rem;
+      color: #6c757d;
+    }
+    .bottom-nav .active {
+      color: #dc3545;
     }
   </style>
 </head>
@@ -59,8 +97,9 @@
       </div>
     </div>
   </nav>
+
+  <!-- Dashboard Content -->
   <div class="container mt-4">
-    <!-- Get Help Fast -->
     <div class="section-title">Get help fast</div>
     <div class="card-option">
       <div><i class="fas fa-bell"></i> Real-time Notifications</div>
@@ -71,16 +110,14 @@
       <div>&gt;</div>
     </div>
 
-    <!-- Be Prepared -->
     <div class="section-title">Be prepared</div>
     <div class="card-option">
       <div><i class="fas fa-comments"></i> Chat Forum</div>
       <div>&gt;</div>
     </div>
 
-    <!-- Illustration -->
     <div class="illustration">
-      <img src="../assets/illustration.png" alt="Hero Illustration" />
+      <img src="../assets/illustration.png" alt="Emergency Response Illustration" />
     </div>
   </div>
 
@@ -91,27 +128,29 @@
     <div><i class="fas fa-user"></i></div>
   </div>
 
-  <!-- Font Awesome -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-
-
   <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
   <script src="../scripts/dashboard.js"></script>
   <script>
     // 🕒 Footer Year
-    document.getElementById("year").textContent = new Date().getFullYear();
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // 🧍 Dynamic User Name (optional fallback)
+    // 🧍 Dynamic User Name
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.name) {
-      document.getElementById("userName").textContent = user.name;
+    const userNameEl = document.getElementById("userName");
+    if (user && user.name && userNameEl) {
+      userNameEl.textContent = user.name;
     }
 
     // 🔓 Logout Button
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      localStorage.removeItem("isLoggedIn");
-      window.location.href = "../Pages/SignIn.html";
-    });
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("isLoggedIn");
+        window.location.href = "../Pages/SignIn.html";
+      });
+    }
   </script>
 </body>
 </html>
