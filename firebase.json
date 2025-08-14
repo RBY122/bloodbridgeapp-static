@@ -13,8 +13,10 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-      { "source": "/dashboard", "destination": "/pages/Dashboard.html" },
-      { "source": "/index.html", "destination": "/pages/index.html" }
-    ]
+  { "source": "/", "destination": "/pages/index.html" },
+  { "source": "/dashboard", "destination": "/pages/Dashboard.html" },
+  { "source": "/signup", "destination": "/pages/SignUp.html" },
+  { "source": "/signin", "destination": "/pages/SignIn.html" }
+]
   }
 }
