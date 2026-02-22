@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule Appointment - BloodBridge</title>
+  <meta name="description" content="Schedule a blood donation appointment at a convenient location." />
+  <meta name="theme-color" content="#c41e3a" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/variables.css" />
+  <link rel="stylesheet" href="../styles/global.css" />
+
+  <style>
+    main { min-height: calc(100vh - 120px); }
+    
+    .header-section {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: white;
+      padding: var(--spacing-2xl) 0;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .form-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-lg);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .facility-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      border: 2px solid var(--color-gray-200);
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+
+    .facility-card:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .facility-card.selected {
+      border-color: var(--color-primary);
+      background: rgba(196, 30, 58, 0.05);
+    }
+
+    .facility-card input[type="radio"] {
+      margin-right: var(--spacing-md);
+    }
+
+    .availability-slot {
+      padding: var(--spacing-md);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .availability-slot:hover {
+      background: var(--bg-secondary);
+      border-color: var(--color-primary);
+    }
+
+    .availability-slot.selected {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger sticky-top">
+    <div class="container-fluid px-3 px-md-5">
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <i class="fas fa-droplet me-2"></i>BloodBridge
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-2">
+          <li class="nav-item"><a class="nav-link" href="./Dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./Appointments.html">Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="./Profile.html">Profile</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="main-content" role="main">
+    <!-- Header -->
+    <div class="header-section">
+      <div class="container">
+        <h1 class="display-6 fw-bold mb-2">Schedule an Appointment</h1>
+        <p class="lead mb-0">Book your blood donation appointment at a convenient location</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Alert Messages -->
+      <div id="messageAlert" class="alert d-none mb-4" role="alert"></div>
+
+      <!-- Appointment Form -->
+      <form id="appointmentForm" class="form-card">
+        <!-- Step 1: Select Facility -->
+        <div class="mb-5">
+          <h3 class="mb-3 text-danger">
+            <i class="fas fa-hospital-alt me-2"></i>
+            Step 1: Choose Facility
+          </h3>
+
+          <div id="facilitiesList"></div>
+        </div>
+
+        <!-- Step 2: Select Date -->
+        <div class="mb-5">
+          <h3 class="mb-3 text-danger">
+            <i class="fas fa-calendar me-2"></i>
+            Step 2: Select Date
+          </h3>
+
+          <div class="form-group mb-3">
+            <label for="appointmentDate" class="form-label fw-semibold">Date & Time</label>
+            <input type="datetime-local" id="appointmentDate" class="form-control form-control-lg" required />
+            <small class="text-muted">Select a date at least 48 hours from now</small>
+          </div>
+        </div>
+
+        <!-- Step 3: Confirm -->
+        <div class="mb-5">
+          <h3 class="mb-3 text-danger">
+            <i class="fas fa-check-circle me-2"></i>
+            Step 3: Confirmation
+          </h3>
+
+          <div class="alert alert-light border">
+            <div class="mb-2"><strong>Facility:</strong> <span id="confirmFacility">-</span></div>
+            <div class="mb-2"><strong>Date & Time:</strong> <span id="confirmDateTime">-</span></div>
+            <div><strong>Instructions:</strong> Please arrive 15 minutes early and bring a valid ID</div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="agreeTerms" required />
+            <label class="form-check-label" for="agreeTerms">
+              I confirm my appointment and agree to the donation guidelines
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg w-100">
+            <i class="fas fa-calendar-check me-2"></i>Confirm Appointment
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-dark text-light py-4">
+    <div class="container text-center small">
+      <p class="mb-0">&copy; <span id="currentYear"></span> BloodBridge. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Mock facilities data
+    const facilities = [
+      { id: 1, name: 'Kumasi South Hospital', location: 'Kumasi', distance: '2.3 km' },
+      { id: 2, name: 'Ashanti Regional Blood Bank', location: 'Ashanti', distance: '5.1 km' },
+      { id: 3, name: 'Central Health Center', location: 'Downtown', distance: '1.8 km' }
+    ];
+
+    // Load facilities
+    const facilitiesList = document.getElementById('facilitiesList');
+    facilities.forEach(facility => {
+      const div = document.createElement('div');
+      div.className = 'facility-card';
+      div.innerHTML = `
+        <input type="radio" name="facility" value="${facility.id}" required />
+        <strong>${facility.name}</strong>
+        <small class="d-block text-muted">${facility.location} • ${facility.distance} away</small>
+      `;
+      div.addEventListener('click', () => {
+        document.querySelector(`input[value="${facility.id}"]`).checked = true;
+        div.classList.add('selected');
+        document.querySelectorAll('.facility-card').forEach(c => {
+          if (c !== div) c.classList.remove('selected');
+        });
+        document.getElementById('confirmFacility').textContent = facility.name;
+      });
+      facilitiesList.appendChild(div);
+    });
+
+    // Update confirmation on date change
+    document.getElementById('appointmentDate').addEventListener('change', function() {
+      const date = new Date(this.value);
+      document.getElementById('confirmDateTime').textContent = date.toLocaleString();
+    });
+
+    // Form submit
+    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const facility = document.querySelector('input[name="facility"]:checked');
+      const date = document.getElementById('appointmentDate').value;
+
+      if (!facility || !date) {
+        showAlert('Please complete all steps', 'danger');
+        return;
+      }
+
+      const appointmentData = {
+        facilityId: facility.value,
+        facilityName: document.getElementById('confirmFacility').textContent,
+        dateTime: date
+      };
+
+      localStorage.setItem('appointment', JSON.stringify(appointmentData));
+      showAlert('Appointment scheduled successfully!', 'success');
+
+      setTimeout(() => {
+        window.location.href = './Dashboard.html';
+      }, 1500);
+    });
+
+    function showAlert(message, type) {
+      const alert = document.getElementById('messageAlert');
+      alert.className = `alert alert-${type}`;
+      alert.textContent = message;
+      alert.classList.remove('d-none');
+    }
+  </script>
+</body>
+</html>

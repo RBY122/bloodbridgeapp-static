@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ===== META TAGS ===== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile - BloodBridge</title>
+  <meta name="description" content="Manage your BloodBridge profile and donation history." />
+  <meta name="theme-color" content="#c41e3a" />
+
+  <!-- ===== STYLESHEETS ===== -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/variables.css" />
+  <link rel="stylesheet" href="../styles/global.css" />
+
+  <style>
+    main {
+      min-height: calc(100vh - 120px);
+      padding: var(--spacing-lg) 0;
+      background: var(--bg-secondary);
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: white;
+      padding: var(--spacing-2xl) 0;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .info-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-md) 0;
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+    }
+
+    .info-value {
+      color: var(--text-secondary);
+    }
+
+    .section-title {
+      font-size: var(--text-xl);
+      color: var(--color-primary);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 3px solid var(--color-primary);
+    }
+
+    .edit-form {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      display: none;
+    }
+
+    .edit-form.show {
+      display: block;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .badge-status.active {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-status.inactive {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .donation-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      background: rgba(196, 30, 58, 0.1);
+      color: var(--color-primary);
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger sticky-top">
+    <div class="container-fluid px-3 px-md-5">
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <i class="fas fa-droplet me-2"></i>BloodBridge
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-2">
+          <li class="nav-item"><a class="nav-link" href="./Dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./Profile.html">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="./Appointments.html">Appointments</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="./settings.html">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="main-content" role="main">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="container">
+        <div class="d-flex align-items-center gap-4">
+          <div class="profile-avatar">
+            <i class="fas fa-user text-danger"></i>
+          </div>
+          <div>
+            <h1 class="display-6 fw-bold mb-2" id="profileName">User Name</h1>
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+              <div class="donation-badge">
+                <i class="fas fa-tint"></i>
+                <span id="profileBloodType">O+</span>
+              </div>
+              <span class="badge-status active">Active Donor</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Personal Information -->
+      <h2 class="section-title">Personal Information</h2>
+      <div id="profileViewMode" class="info-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Your Details</h5>
+          <button class="btn btn-sm btn-outline-primary" onclick="toggleEditMode()">
+            <i class="fas fa-edit me-2"></i>Edit
+          </button>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Full Name</span>
+          <span class="info-value" id="viewName">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Email</span>
+          <span class="info-value" id="viewEmail">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Blood Type</span>
+          <span class="info-value" id="viewBloodType">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Phone</span>
+          <span class="info-value" id="viewPhone">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Last Donation</span>
+          <span class="info-value" id="viewLastDonation">Never</span>
+        </div>
+      </div>
+
+      <!-- Edit Form -->
+      <form id="editProfileForm" class="edit-form">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="mb-0">Edit Profile</h5>
+          <button type="button" class="btn-close" onclick="toggleEditMode()"></button>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="editName" class="form-label fw-semibold">Full Name</label>
+          <input type="text" id="editName" class="form-control form-control-lg" required />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="editPhone" class="form-label fw-semibold">Phone Number</label>
+          <input type="tel" id="editPhone" class="form-control form-control-lg" placeholder="+233 ..." />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="editBloodType" class="form-label fw-semibold">Blood Type</label>
+          <select id="editBloodType" class="form-select form-select-lg" required>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+        </div>
+
+        <div class="d-flex gap-3">
+          <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg" onclick="toggleEditMode()">Cancel</button>
+        </div>
+      </form>
+
+      <!-- Donation Statistics -->
+      <h2 class="section-title mt-5">Donation Statistics</h2>
+      <div class="row mb-5">
+        <div class="col-md-6">
+          <div class="info-card">
+            <h5 class="mb-3">Lifetime Statistics</h5>
+            <div class="info-row">
+              <span class="info-label">Total Donations</span>
+              <span class="info-value"><strong id="statTotalDonations">0</strong></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Total Blood Donated</span>
+              <span class="info-value"><strong id="statTotalVolume">0</strong> ml</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Lives Potentially Saved</span>
+              <span class="info-value"><strong id="statLivesSaved">0</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-card">
+            <h5 class="mb-3">Eligibility Status</h5>
+            <div class="info-row">
+              <span class="info-label">Can Donate Now</span>
+              <span class="info-value">
+                <span class="badge-status active">Yes</span>
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Next Eligible Date</span>
+              <span class="info-value" id="nextEligibleDate">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Donor Status</span>
+              <span class="info-value"><strong>Regular</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Donations -->
+      <h2 class="section-title">Recent Donations</h2>
+      <div class="info-card">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Volume (ml)</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentDonationsTable">
+              <tr>
+                <td colspan="4" class="text-center text-muted py-4">
+                  <i class="fas fa-inbox me-2"></i>No donations recorded yet
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-dark text-light py-4">
+    <div class="container">
+      <div class="text-center small">
+        <p class="mb-1">&copy; <span id="currentYear"></span> BloodBridge. All rights reserved.</p>
+        <p class="mb-0">Questions? <a href="./Support.html" class="text-light">Contact us</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="../scripts/main.js"></script>
+  
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Load user data
+    const user = JSON.parse(localStorage.getItem('user')) || {};
+    
+    const profileData = {
+      name: user.name || 'John Doe',
+      email: user.email || 'john@example.com',
+      bloodType: user.bloodType || 'O+',
+      phone: user.phone || '+233 059 683 3199',
+      lastDonation: 'August 15, 2024',
+      totalDonations: 3,
+      totalVolume: 900,
+      livesSaved: 9
+    };
+
+    // Display profile info
+    function loadProfileData() {
+      document.getElementById('profileName').textContent = profileData.name;
+      document.getElementById('profileBloodType').textContent = profileData.bloodType;
+      
+      document.getElementById('viewName').textContent = profileData.name;
+      document.getElementById('viewEmail').textContent = profileData.email;
+      document.getElementById('viewBloodType').textContent = profileData.bloodType;
+      document.getElementById('viewPhone').textContent = profileData.phone;
+      document.getElementById('viewLastDonation').textContent = profileData.lastDonation;
+
+      // Edit form values
+      document.getElementById('editName').value = profileData.name;
+      document.getElementById('editPhone').value = profileData.phone;
+      document.getElementById('editBloodType').value = profileData.bloodType;
+
+      // Statistics
+      document.getElementById('statTotalDonations').textContent = profileData.totalDonations;
+      document.getElementById('statTotalVolume').textContent = profileData.totalVolume;
+      document.getElementById('statLivesSaved').textContent = profileData.livesSaved;
+
+      // Calculate next eligible date (56 days after last donation)
+      const lastDate = new Date('August 15, 2024');
+      const nextDate = new Date(lastDate.getTime() + 56 * 24 * 60 * 60 * 1000);
+      document.getElementById('nextEligibleDate').textContent = nextDate.toLocaleDateString();
+    }
+
+    function toggleEditMode() {
+      const viewMode = document.getElementById('profileViewMode');
+      const editForm = document.getElementById('editProfileForm');
+      
+      viewMode.style.display = viewMode.style.display === 'none' ? 'block' : 'none';
+      editForm.classList.toggle('show');
+    }
+
+    const editForm = document.getElementById('editProfileForm');
+    if (editForm) {
+      editForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        profileData.name = document.getElementById('editName').value;
+        profileData.phone = document.getElementById('editPhone').value;
+        profileData.bloodType = document.getElementById('editBloodType').value;
+
+        localStorage.setItem('user', JSON.stringify({...user, ...profileData}));
+        loadProfileData();
+        toggleEditMode();
+        alert('Profile updated successfully!');
+      });
+    }
+
+    // Load on page load
+    loadProfileData();
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('user');
+        window.location.href = '../index.html';
+      }
+    }
+  </script>
+</body>
+</html>

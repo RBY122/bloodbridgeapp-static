@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support - BloodBridge</title>
+  <meta name="description" content="Support BloodBridge's mission to save lives. Donate, volunteer, or share!" />
+  <meta name="theme-color" content="#c41e3a" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/variables.css" />
+  <link rel="stylesheet" href="../styles/global.css" />
+
+  <style>
+    .hero-section {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: white;
+      padding: var(--spacing-3xl) 0;
+      text-align: center;
+    }
+
+    .support-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      height: 100%;
+      transition: all var(--transition-base);
+    }
+
+    .support-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .support-icon {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .support-icon.donate { color: var(--color-primary); }
+    .support-icon.volunteer { color: #ffc107; }
+    .support-icon.share { color: var(--color-success); }
+
+    .faq-item {
+      background: white;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faq-question {
+      padding: var(--spacing-lg);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: var(--font-semibold);
+    }
+
+    .faq-answer {
+      padding: 0 var(--spacing-lg) var(--spacing-lg);
+      display: none;
+      border-top: 1px solid var(--color-gray-200);
+      color: var(--text-secondary);
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .contact-section {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger sticky-top">
+    <div class="container-fluid px-3 px-md-5">
+      <a class="navbar-brand fw-bold" href="../index.html">
+        <i class="fas fa-droplet me-2"></i>BloodBridge
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="./AboutUs.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./Support.html">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="main-content" role="main">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <h1 class="display-4 fw-bold mb-3">Support BloodBridge</h1>
+        <p class="lead mb-0">Help us save lives - Your support makes a real difference!</p>
+      </div>
+    </section>
+
+    <div class="container py-5">
+      <!-- Support Options -->
+      <section class="mb-5">
+        <h2 class="h3 text-center text-danger fw-bold mb-4">Ways You Can Help</h2>
+        
+        <div class="row g-4">
+          <!-- Financial Donation -->
+          <div class="col-md-4">
+            <div class="support-card">
+              <div class="support-icon donate"><i class="fas fa-hand-holding-heart"></i></div>
+              <h4 class="fw-bold">Financial Donation</h4>
+              <p class="text-muted">
+                Your monetary contribution helps fund development, hosting, and life-saving awareness campaigns.
+              </p>
+              <a href="./Donation.html" class="btn btn-primary">
+                <i class="fas fa-donate me-2"></i>Donate Now
+              </a>
+            </div>
+          </div>
+
+          <!-- Volunteer -->
+          <div class="col-md-4">
+            <div class="support-card">
+              <div class="support-icon volunteer"><i class="fas fa-users"></i></div>
+              <h4 class="fw-bold">Volunteer</h4>
+              <p class="text-muted">
+                Join our community of volunteers at donation drives and community awareness programs.
+              </p>
+              <button class="btn btn-warning" onclick="alert('Volunteer signup coming soon!')">
+                <i class="fas fa-handshake me-2"></i>Volunteer
+              </button>
+            </div>
+          </div>
+
+          <!-- Share & Spread -->
+          <div class="col-md-4">
+            <div class="support-card">
+              <div class="support-icon share"><i class="fas fa-share-alt"></i></div>
+              <h4 class="fw-bold">Share the Message</h4>
+              <p class="text-muted">
+                Share BloodBridge with your friends, family, and social networks to spread awareness.
+              </p>
+              <div class="d-flex gap-2 justify-content-center">
+                <button class="btn btn-sm btn-info" onclick="shareOn('facebook')">
+                  <i class="fab fa-facebook"></i>
+                </button>
+                <button class="btn btn-sm btn-info" onclick="shareOn('twitter')">
+                  <i class="fab fa-twitter"></i>
+                </button>
+                <button class="btn btn-sm btn-info" onclick="shareOn('whatsapp')">
+                  <i class="fab fa-whatsapp"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Impact Stats -->
+      <section class="bg-light rounded p-5 my-5">
+        <h2 class="h4 text-center text-danger fw-bold mb-4">Your Support Impact</h2>
+        <div class="row text-center">
+          <div class="col-md-4 mb-3">
+            <h3 class="text-danger fw-bold">500+</h3>
+            <p class="text-muted">Active Donors</p>
+          </div>
+          <div class="col-md-4 mb-3">
+            <h3 class="text-danger fw-bold">1,500+</h3>
+            <p class="text-muted">Lives Saved</p>
+          </div>
+          <div class="col-md-4 mb-3">
+            <h3 class="text-danger fw-bold">15,000 L</h3>
+            <p class="text-muted">Blood Collected</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="mb-5">
+        <h2 class="h3 text-center text-danger fw-bold mb-4">Frequently Asked Questions</h2>
+
+        <div class="faq-item active">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>How does my donation help?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Your donation helps us maintain the platform, improve features, and run community awareness campaigns. With BloodBridge, donations are connected to lifesaving impacts - on average, one donation can save up to 3 lives.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Is my donation tax-deductible?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>BloodBridge is currently a community initiative. We're working towards official NGO registration to provide tax benefits. Contact us for more information on our registration status.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Can I donate blood even if I'm not in Ghana?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Currently, BloodBridge operates in Ghana. However, you can support our mission through financial donations, volunteering remotely, or promoting the platform in your network.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>What are donor eligibility requirements?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Blood donors must be at least 17 years old, weigh 110+ pounds, in good health, and have a valid ID. Some medical conditions may prevent donation. Visit your nearest blood bank for a detailed health screening.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact-section">
+        <h2 class="h4 text-danger fw-bold mb-3">Have Questions?</h2>
+        <p class="mb-4">We'd love to hear from you! Reach out with any questions or feedback.</p>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="mb-2">
+              <strong><i class="fas fa-envelope text-danger me-2"></i>Email</strong>
+              <p><a href="mailto:info@bloodbridgeapp.com">info@bloodbridgeapp.com</a></p>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="mb-2">
+              <strong><i class="fas fa-phone text-danger me-2"></i>Phone</strong>
+              <p><a href="tel:+233596833199">+233 059 683 3199</a></p>
+            </div>
+          </div>
+        </div>
+
+        <form class="mt-4">
+          <input type="text" placeholder="Your Name" class="form-control mb-2" />
+          <input type="email" placeholder="Your Email" class="form-control mb-2" />
+          <textarea placeholder="Your Message" rows="4" class="form-control mb-3"></textarea>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-dark text-light py-4">
+    <div class="container text-center small">
+      <p class="mb-1">&copy; <span id="currentYear"></span> BloodBridge. All rights reserved.</p>
+      <p class="mb-0">Thank you for your support!</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    function toggleFAQ(element) {
+      document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== element.closest('.faq-item')) {
+          item.classList.remove('active');
+        }
+      });
+      element.closest('.faq-item').classList.toggle('active');
+    }
+
+    function shareOn(platform) {
+      const url = window.location.href;
+      const text = 'Join BloodBridge - Save Lives! Connect blood donors and recipients across Ghana.';
+      
+      switch(platform) {
+        case 'facebook':
+          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+          break;
+        case 'twitter':
+          window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+          break;
+        case 'whatsapp':
+          window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
+          break;
+      }
+    }
+  </script>
+</body>
+</html>
