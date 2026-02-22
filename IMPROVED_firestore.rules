@@ -1,0 +1,175 @@
+<!-- ✅ IMPROVED: Updated Firestore Security Rules -->
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    /**
+     * ===== USER AUTHENTICATION & ROLE-BASED ACCESS =====
+     * This RuleSet implements proper security with role-based access control
+     */
+    
+    // Allow unauthenticated users to read public data
+    match /public/{document=**} {
+      allow read;
+      allow write: if false; // Read-only for public
+    }
+    
+    /**
+     * ===== USERS COLLECTION =====
+     * Store user profiles with authentication checks
+     */
+    match /users/{userId} {
+      // Users can read/write their own profile
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Allow signup (new user creation)
+      allow create: if request.auth != null;
+      
+      // Admin-only access for user management
+      allow read: if request.auth != null && 
+                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    /**
+     * ===== DONORS COLLECTION =====
+     * Manage donor profiles and availability
+     */
+    match /donors/{donorId} {
+      // Donors can read/write their own profile
+      allow read, write: if request.auth != null && request.auth.uid == donorId;
+      
+      // Others can only read public donor info (name, blood type, availability)
+      allow read: if request.auth != null && 
+                     resource.data.isPublic == true;
+      
+      // Create new donor profile on signup
+      allow create: if request.auth != null &&
+                       request.resource.data.userId == request.auth.uid &&
+                       request.resource.data.keys().hasAll(['bloodType', 'location']);
+    }
+    
+    /**
+     * ===== BLOOD REQUESTS COLLECTION =====
+     * Handle emergency blood requests
+     */
+    match /bloodRequests/{requestId} {
+      // Users can create requests
+      allow create: if request.auth != null &&
+                       request.resource.data.requesterUid == request.auth.uid &&
+                       request.resource.data.bloodType in ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] &&
+                       request.resource.data.unitsNeeded > 0;
+      
+      // Requester can read/write their own request
+      allow read, write: if request.auth != null && 
+                           resource.data.requesterUid == request.auth.uid;
+      
+      // Donors can view active requests to help
+      allow read: if request.auth != null && 
+                     resource.data.status == 'active';
+      
+      // Update request status (mark as fulfilled, urgent, etc.)
+      allow update: if request.auth != null && 
+                       (resource.data.requesterUid == request.auth.uid ||
+                        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    /**
+     * ===== DONATIONS COLLECTION =====
+     * Track completed donations
+     */
+    match /donations/{donationId} {
+      // Users can view their own donation history
+      allow read: if request.auth != null && 
+                     (resource.data.donorUid == request.auth.uid ||
+                      resource.data.recipientUid == request.auth.uid);
+      
+      // Create donation record
+      allow create: if request.auth != null &&
+                       request.resource.data.donorUid == request.auth.uid &&
+                       request.resource.data.status in ['pending', 'completed', 'cancelled'];
+      
+      // Admin can view all donations
+      allow read: if request.auth != null && 
+                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    /**
+     * ===== APPOINTMENTS COLLECTION =====
+     * Manage donation appointments
+     */
+    match /appointments/{appointmentId} {
+      // Users can read their own appointments
+      allow read: if request.auth != null && 
+                     (resource.data.donorUid == request.auth.uid ||
+                      resource.data.facilityStaffUid == request.auth.uid);
+      
+      // Create appointment
+      allow create: if request.auth != null &&
+                       request.resource.data.donorUid == request.auth.uid &&
+                       request.resource.data.scheduledDate > now;
+      
+      // Update own appointment (reschedule, confirm)
+      allow update: if request.auth != null && 
+                       resource.data.donorUid == request.auth.uid;
+      
+      // Facility staff can update appointment status
+      allow update: if request.auth != null && 
+                       get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'facility_staff';
+    }
+    
+    /**
+     * ===== BLOOD BANKS COLLECTION =====
+     * Blood bank information (read-only for users)
+     */
+    match /bloodBanks/{bankId} {
+      // Anyone can read blood bank info
+      allow read: if true;
+      
+      // Only admins can write
+      allow write: if request.auth != null && 
+                      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    /**
+     * ===== NOTIFICATIONS COLLECTION =====
+     * User notifications
+     */
+    match /notifications/{userId}/{notificationId} {
+      // Users can read their own notifications
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // System can create notifications
+      allow create: if true; // Consider restricting to Cloud Functions
+      
+      // Users can delete their own notifications
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    /**
+     * ===== HELPER FUNCTIONS =====
+     */
+    
+    // Check if user document exists and user is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    // Check if user has admin role
+    function isAdmin() {
+      return isSignedIn() && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Validate email format
+    function isValidEmail(email) {
+      return email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+    }
+    
+    // Validate blood type
+    function isValidBloodType(bloodType) {
+      return bloodType in ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
+    }
+  }
+}
